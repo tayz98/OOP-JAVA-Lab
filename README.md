@@ -6,3 +6,5 @@ All coding tasks from the OOP Lab will be documented in this repository.
 Alexander Nachtigal <br>
 Sören Zacharias <br>
 Veronica Zylla
+
+Cool
