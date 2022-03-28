@@ -4,16 +4,23 @@ package Labor02;
 public class Calculator{
 
     public static void main(String[] args) {
+
+        // Umwandlung der Strings in Integer-Variablen
         int n1 = Integer.parseInt(args[0]);
         int n2 = Integer.parseInt(args[2]);
+
+        // Rechnung und Ausgabe der Werte
         switch (args[1]) {
             case "+" -> System.out.println(n1 + n2);
             case "-" -> System.out.println(n1 - n2);
             case "/" -> {
                 double result = ((double) n1) / n2;
+                // wenn es sich um ein gerades Ergebnis handelt, wird ein int-Wert ausgegeben
                 if (result % 1 == 0) {
                     System.out.println((int) result);
-                } else {
+                }
+                // ansonsten wird ein double-Ergebnis mit Nachkommastelle ausgegeben
+                else {
                     System.out.println(result);
                 }
             }
