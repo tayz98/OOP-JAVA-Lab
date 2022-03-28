@@ -1,7 +1,7 @@
 package Labor02;
 
 
-public class ProfiRechner{
+public class AdvancedCalculator{
 
     public static void main(String[] args) {
         
