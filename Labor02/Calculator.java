@@ -4,7 +4,8 @@ package Labor02;
 public class Calculator{
 
     public static void main(String[] args) {
-        System.out.println("Hallo Taschenrechner");
+        System.out.println("Hallo Taschenrechner"); // random comment
+        System.out.println("Test.");
     }
 }
 
