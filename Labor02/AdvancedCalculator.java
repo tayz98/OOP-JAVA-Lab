@@ -1,4 +1,4 @@
-package Labor02;
+package labor02;
 
 
 public class AdvancedCalculator{

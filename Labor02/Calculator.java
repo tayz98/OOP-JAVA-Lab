@@ -1,25 +1,25 @@
-package Labor02;
+package labor02;
 
 
 public class Calculator{
 
     public static void main(String[] args) {
 
-        // Umwandlung der Strings in Integer-Variablen
+        // Converting the strings into integer variables
         int n1 = Integer.parseInt(args[0]);
         int n2 = Integer.parseInt(args[2]);
 
-        // Rechnung und Ausgabe der Werte
+        // Calculation and output of the values
         switch (args[1]) {
             case "+" -> System.out.println(n1 + n2);
             case "-" -> System.out.println(n1 - n2);
             case "/" -> {
                 double result = ((double) n1) / n2;
-                // wenn es sich um ein gerades Ergebnis handelt, wird ein int-Wert ausgegeben
+                // if it is an even result, an int value is output
                 if (result % 1 == 0) {
                     System.out.println((int) result);
                 }
-                // ansonsten wird ein double-Ergebnis mit Nachkommastelle ausgegeben
+                // otherwise, a double result with decimal place is output
                 else {
                     System.out.println(result);
                 }
