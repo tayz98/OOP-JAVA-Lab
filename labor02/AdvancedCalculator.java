@@ -10,7 +10,11 @@ public class AdvancedCalculator {
 
         // check for arithmetic exceptions
         try {
-            // the following switch case is copied from the Calculator.java file. Maybe use a method to shorten the code?
+            /* the following switch case is copied from the Calculator.java file. Maybe use a method to shorten the code?
+               for example "calculator.method(n1, n2)
+               the problem is, the method will be unknown to the terminal if you only run the AdvancedCalculator.java file */
+
+            // Calculation and output of the values
             switch (args[1]) {
                 case "+" -> System.out.println(n1 + n2);
                 case "-" -> System.out.println(n1 - n2);
@@ -26,7 +30,7 @@ public class AdvancedCalculator {
                     }
                 }
                 case "*" -> System.out.println(n1 * n2);
-                default -> System.out.println(0); // Calculation and output of the values
+                default -> System.out.println(0);
             }
         } catch (ArithmeticException exception) {
             System.out.println("You can't divide by 0"); // This line is never executed, explanation here: https://www.geeksforgeeks.org/g-fact-33-infinity-or-exception/
