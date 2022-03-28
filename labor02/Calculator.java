@@ -10,6 +10,10 @@ public class Calculator{
         int n2 = Integer.parseInt(args[2]);
 
         // Calculation and output of the values
+        args(args, n1, n2);
+    }
+
+    protected static void args(String[] args, int n1, int n2) {
         switch (args[1]) {
             case "+" -> System.out.println(n1 + n2);
             case "-" -> System.out.println(n1 - n2);
