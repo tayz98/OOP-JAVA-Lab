@@ -46,7 +46,7 @@ public class AdvancedCalculator {
 
         }
     }
-
+// test
 /* Task:
 Könnt ihr euer Programm für die folgenden Aufgaben erweitern?
     • Verhindert mögliche Fehler und gebt einen Hilfetext in Fehlerfall aus. -> should be done [Alex]
