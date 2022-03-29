@@ -1,5 +1,13 @@
-package labor02;
+/**
+ * @name Calculator
+ * @package labor02
+ * @file Calculator.java
+ * @authors Veronica Zylla, Sören Zacharias, Alexander Nachtigal
+ * @email veronica.zylla@student.fh-kiel.de, soeren.zacharias@student.fh-kiel.de, alexander.nachtigal@student.fh-kiel.de
+ * @link https://github.com/tayz98/OOP_Labor/tree/main/labor02
+ */
 
+package labor02;
 
 public class Calculator {        // this programm is a very basic calculator without exception handling.
 
@@ -27,10 +35,8 @@ public class Calculator {        // this programm is a very basic calculator wit
             case "*" -> System.out.println(n1 * n2);
             default -> System.out.println(0);
         }
-
-
     }
-    }
+}
 
 
 /* Task: 
