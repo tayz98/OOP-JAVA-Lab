@@ -10,7 +10,7 @@ public class AdvancedCalculator {
             int n1 = Integer.parseInt(args[0]);
             int n2 = Integer.parseInt(args[2]);
         } catch (NumberFormatException exception2) {
-            System.err.println("The input you have given was either not no number or a too large number ");
+            System.err.println("The input you have given was either no number or a too large number ");
             System.out.println("Please restart the program with correct arguments.");
             int n1 = 0, n2 = 0;                              // still need to re-initialize variables n1 and n2 for avoiding compiler err. maybe we find a better solution later on.
             System.exit(42); // random exit code
