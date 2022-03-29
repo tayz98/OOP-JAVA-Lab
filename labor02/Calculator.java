@@ -1,7 +1,7 @@
 package labor02;
 
 
-public class Calculator{
+public class Calculator {        // this programm is a very basic calculator without exception handling.
 
     public static void main(String[] args) {
 
@@ -10,10 +10,6 @@ public class Calculator{
         int n2 = Integer.parseInt(args[2]);
 
         // Calculation and output of the values
-        args(args, n1, n2);
-    }
-
-    protected static void args(String[] args, int n1, int n2) {
         switch (args[1]) {
             case "+" -> System.out.println(n1 + n2);
             case "-" -> System.out.println(n1 - n2);
@@ -31,8 +27,11 @@ public class Calculator{
             case "*" -> System.out.println(n1 * n2);
             default -> System.out.println(0);
         }
+
+
     }
-}
+    }
+
 
 /* Task: 
 Programmiert in Java einen einfachen Taschenrechner, der drei Parameter über die
