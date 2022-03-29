@@ -24,6 +24,9 @@ public class AdvancedCalculator {
                     if (result % 1 == 0) {
                         System.out.println((int) result);
                     }
+                    else if (n2 == 0) {
+                        System.err.println("You can't divide by 0");
+                    }
                     // otherwise, a double result with decimal place is output
                     else {
                         System.out.println(result);
