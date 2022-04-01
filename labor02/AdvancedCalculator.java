@@ -3,38 +3,16 @@ package labor02;
 
 public class AdvancedCalculator {
 
-    public static String sign(String[] operators, int number) {
-        for (int j = number - 1; j >= 0; j--) {
-            if (operators[j] != null && !(operators[j].contains("/") || operators[j].contains("*"))) {
-                if (operators[j].contains("+")) {
-                    String tempSign = "+";
-                    operators[j] = null;
-                    return tempSign;
-                } else if (operators[j].contains("-")) {
-                    String tempSign = "-";
-                    operators[j] = null;
-                    return tempSign;
-                }
+    public static String nextSign(String[] operators, int number) {
+        int k = number;
+        for (int i = k; i < operators.length; i++) {
+            if (operators[k].contains("*") || operators[k].contains("/")) {
+                return operators[k];
             }
         }
-        return "+";
+
     }
 
-    /* static double nextNumber(double[] numbers, int number2, String[] operators) {
-        for (int j = number2; j > numbers.length; j++) {
-            if (numbers[j] != 0) {
-                double temp = 0;
-                if (operators[j-1].contains("+")) {
-                    temp += numbers[j];
-                } else {
-                    temp -= numbers[j];
-                }
-                numbers[j] = 0;
-                return temp;
-            }
-        }
-        return 0;
-    }*/
 
     public static void main(String[] args) {
         double[] numbers = new double[args.length];
@@ -48,50 +26,33 @@ public class AdvancedCalculator {
             }
         }
 
-        for (int j = 0; j < operators.length; j++) {
-            if (operators[j] != null && operators[j].contains("*")) {
-                String sign1 = sign(operators, j);
-                if (sign1.contains("+")) {
-                    result += (numbers[j - 1] * numbers[j + 1]);
-                    numbers[j - 1] = 0;
-                    numbers[j + 1] = 0;
-                } else if (sign1.contains("-")) {
-                    result -= (numbers[j - 1] * numbers[j + 1]);
-                    numbers[j - 1] = 0;
-                    numbers[j + 1] = 0;
-                }
-
-            } else if (operators[j] != null && operators[j].contains("/")) {
-                String sign1 = sign(operators, j);
-                if (sign1.contains("+")) {
-                    result += (numbers[j - 1] / numbers[j + 1]);
-                    numbers[j - 1] = 0;
-                    numbers[j + 1] = 0;
-                } else if (sign1.contains("-")) {
-                    result -= (numbers[j - 1] / numbers[j + 1]);
-                    numbers[j - 1] = 0;
-                    numbers[j + 1] = 0;
-                }
+        for (int i = 0; i < operators.length; i++) {
+            double multNumber = 0;
+            if (operators[i].contains("*") && numbers[i - 1] != 0 && numbers[i + 1] != 0) {
+                multNumber += (numbers[i - 1] * numbers[i + 1]);
+                numbers[i - 1] = 0;
+                numbers[i + 1] = 0;
+                numbers[i - 1] = multNumber;
+            } else if (operators[i].contains("*") && numbers[i - 1] == 0 && numbers[i + 1] != 0 && nextSign(operators, i)) {
+                m
             }
         }
-
-        for (int k = 0; k < operators.length; k++) {
-            if (operators[k] != null && operators[k].contains("+")) {
-                result += numbers[k + 1];
-                operators[k] = null;
-            }
-            }
-
-
-        for (int k = 0; k < operators.length; k++) {
-            if (operators[k] != null && operators[k].contains("-")) {
-                result -= numbers[k + 1];
-                operators[k] = null;
+        for (int i = 0; i < numbers.length; i++) {
+            if (numbers[i] != 0) {
+                if (i == 0) {
+                    result += numbers[i];
+                    numbers[i] = 0;
+                } else if (operators[i - 1].contains("+")) {
+                    result += numbers[i];
+                    numbers[i] = 0;
+                } else if (operators[i - 1].contains("-")) {
+                    result -= numbers[i];
+                    numbers[i] = 0;
+                }
             }
         }
         System.out.println(result);
     }
-
 }
 
 
