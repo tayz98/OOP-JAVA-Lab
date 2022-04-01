@@ -20,16 +20,21 @@ public class AdvancedCalculator {
         return "+";
     }
 
-    public static double nextNumber(double[] numbers, int number2) {
+    /* static double nextNumber(double[] numbers, int number2, String[] operators) {
         for (int j = number2; j > numbers.length; j++) {
             if (numbers[j] != 0) {
-                double temp = numbers[j];
+                double temp = 0;
+                if (operators[j-1].contains("+")) {
+                    temp += numbers[j];
+                } else {
+                    temp -= numbers[j];
+                }
                 numbers[j] = 0;
                 return temp;
             }
         }
         return 0;
-    }
+    }*/
 
     public static void main(String[] args) {
         double[] numbers = new double[args.length];
@@ -72,27 +77,16 @@ public class AdvancedCalculator {
 
         for (int k = 0; k < operators.length; k++) {
             if (operators[k] != null && operators[k].contains("+")) {
-                String sign1 = sign(operators, k);
-                if (sign1.contains("+")) {
-                    result += nextNumber(numbers, k);
-                } else if (sign1.contains("-")) {
-                    result -= nextNumber(numbers, k);
-                } else {
-                    result += nextNumber(numbers, k);
-                }
+                result += numbers[k + 1];
+                operators[k] = null;
             }
-        }
+            }
+
 
         for (int k = 0; k < operators.length; k++) {
             if (operators[k] != null && operators[k].contains("-")) {
-                String sign1 = sign(operators, k);
-                if (sign1.contains("-")) {
-                    result += nextNumber(numbers, k);
-                } else if (sign1.contains("+")) {
-                    result -= nextNumber(numbers, k);
-                } else {
-                    result -= nextNumber(numbers, k);
-                }
+                result -= numbers[k + 1];
+                operators[k] = null;
             }
         }
         System.out.println(result);
