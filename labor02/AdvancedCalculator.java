@@ -71,22 +71,22 @@ public class AdvancedCalculator {
         }
 
         for (int k = 0; k < operators.length; k++) {
-            if (operators[k] != null && operators[k].contains("-")) {
+            if (operators[k] != null && operators[k].contains("+")) {
                 String sign1 = sign(operators, k);
-                if (sign1.contains("-")) {
+                if (sign1.contains("+")) {
                     result += nextNumber(numbers, k);
-                } else if (sign1.contains("+")) {
+                } else if (sign1.contains("-")) {
                     result -= nextNumber(numbers, k);
                 }
             }
         }
 
         for (int k = 0; k < operators.length; k++) {
-            if (operators[k] != null && operators[k].contains("+")) {
+            if (operators[k] != null && operators[k].contains("-")) {
                 String sign1 = sign(operators, k);
-                if (sign1.contains("+")) {
+                if (sign1.contains("-")) {
                     result += nextNumber(numbers, k);
-                } else if (sign1.contains("-")) {
+                } else if (sign1.contains("+")) {
                     result -= nextNumber(numbers, k);
                 }
             }
