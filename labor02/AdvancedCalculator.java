@@ -8,11 +8,11 @@ public class AdvancedCalculator {
             if (operators[j] != null && (operators[j].contains("+") || operators[j].contains("-"))) {
                 if (operators[j].contains("+")) {
                     String tempSign = "+";
-                    //operators[j] = null;
+                    operators[j] = null;
                     return tempSign;
                 } else if (operators[j].contains("-")) {
                     String tempSign = "-";
-                    //operators[j] = null;
+                    operators[j] = null;
                     return tempSign;
                 }
             }
@@ -44,9 +44,8 @@ public class AdvancedCalculator {
         }
 
         for (int j = 0; j < operators.length; j++) {
-            String sign1 = sign(operators);
             if (operators[j] != null && operators[j].contains("*")) {
-
+                String sign1 = sign(operators);
                 if (sign1.contains("+")) {
                     result += (numbers[j - 1] * numbers[j + 1]);
                 } else if (sign1.contains("-")) {
@@ -56,6 +55,7 @@ public class AdvancedCalculator {
                 }
 
             } else if (operators[j] != null && operators[j].contains("/")) {
+                String sign1 = sign(operators);
                 if (sign1.contains("+")) {
                     result += (numbers[j - 1] / numbers[j + 1]);
                 } else if (sign1.contains("-")) {
@@ -78,8 +78,8 @@ public class AdvancedCalculator {
         }
 
         for (int k = 0; k < operators.length; k++) {
-            String sign1 = sign(operators);
             if (operators[k] != null && operators[k].contains("+")) {
+                String sign1 = sign(operators);
                 if (sign1.contains("+")) {
                     result += nextNumber(numbers);
                 } else if (sign1.contains("-")) {
