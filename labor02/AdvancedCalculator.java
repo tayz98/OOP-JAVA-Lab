@@ -5,14 +5,14 @@ public class AdvancedCalculator {
 
     public static String sign(String[] operators) {
         for (int j = 0; j < operators.length; j++) {
-            if (operators[j] != null) {
+            if (operators[j] != null && (operators[j].contains("+") || operators[j].contains("-"))) {
                 if (operators[j].contains("+")) {
                     String tempSign = "+";
-                    operators[j] = null;
+                    //operators[j] = null;
                     return tempSign;
                 } else if (operators[j].contains("-")) {
                     String tempSign = "-";
-                    operators[j] = null;
+                    //operators[j] = null;
                     return tempSign;
                 }
             }
