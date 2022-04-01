@@ -60,6 +60,8 @@ public class AdvancedCalculator {
                 String sign1 = sign(operators, j);
                 if (sign1.contains("+")) {
                     result += (numbers[j - 1] / numbers[j + 1]);
+                    numbers[j - 1] = 0;
+                    numbers[j + 1] = 0;
                 } else if (sign1.contains("-")) {
                     result -= (numbers[j - 1] * numbers[j + 1]);
                     numbers[j - 1] = 0;
