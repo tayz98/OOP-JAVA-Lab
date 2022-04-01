@@ -6,8 +6,8 @@ public class AdvancedCalculator {
     public static String nextSign(String[] operators, int number) {
         int k = number;
         for (int i = k; i < operators.length; i++) {
-            if (operators[k].contains("*") || operators[k].contains("/")) {
-                return operators[k];
+            if (operators[i].contains("*") || operators[k].contains("/")) {
+                return operators[i];
             }
         }
 
@@ -34,7 +34,7 @@ public class AdvancedCalculator {
                 numbers[i + 1] = 0;
                 numbers[i - 1] = multNumber;
             } else if (operators[i].contains("*") && numbers[i - 1] == 0 && numbers[i + 1] != 0 && nextSign(operators, i)) {
-                m
+                miklj - haswdfhrekjgh4wertkljghrtwjkgthgkrtjhgrtjk.h
             }
         }
         for (int i = 0; i < numbers.length; i++) {
