@@ -30,14 +30,14 @@ public class AdvancedCalculator {
         for (int k = 0; k < operators.length; k++) {
             if (operators[k] != null && operators[k].contains("+")) {
                 for (int l = 0; ; l++) {
-                    if (l != 0) {
+                    if (numbers[l] != 0) {
                         result += numbers[l];
                         break;
                     }
                 }
             } else if (operators[k] != null && operators[k].contains("-")) {
                 for (int m = 0; ; m++) {
-                    if (m != 0) {
+                    if (numbers[m] != 0) {
                         result -= numbers[m];
                         break;
                     }
