@@ -1,52 +1,59 @@
-package labor02;
 
-import java.text.DecimalFormat;
+package labor02;
 
 public class AdvancedCalculator {
 
-    // method for removing the ".0" from a double
-    public static String fmt(double d) {                    // credits for this fantastic method go to this guy from stackoverflow: https://stackoverflow.com/a/25834067/10859572
-        if (d == (int) d) {
-            return String.format("%d", (int) d);
-        } else {
-            return String.format("%s", d);
-        }
-    }
-
     public static void main(String[] args) {
-
-        double n1 = 0, n2 = 0; // needs to be initialized before the try catch block. otherwise, the compiler will output an error.
-
-
-        // converts the entered arguments/strings to double variables.
-        // the programm terminates, if the given input is invalid.
-        try {
-            n1 = Double.parseDouble(args[0]);
-            n2 = Double.parseDouble(args[2]);
-        } catch (NumberFormatException exception2) {
-            System.err.println("The input you have given was either no number or a too large number ");
-            System.out.println("Please restart the program with correct arguments.");
-            System.exit(42); // random exit code
+        double[] numbers = new double[args.length];
+        String[] operators = new String[args.length];
+        double result = 0;
+        for (int i = 0; i < args.length; i++) {
+            if (args[i].contains("+") || args[i].contains("-") || args[i].contains("*") || args[i].contains("/")) {
+                operators[i] = args[i];
+            } else {
+                numbers[i] = Double.parseDouble(args[i]);
+            }
         }
 
-        // Outputs the calculation.
-        switch (args[1]) {
-            case "+" -> System.out.println(fmt(n1 + n2));
-            case "-" -> System.out.println(fmt(n1 - n2));
-            case "/" -> {
-                if (n2 == 0) {
-                    System.err.println("You can't divide by 0");
-                } else {
-                    System.out.println(fmt(n1 / n2));
+        for (int j = 0; j < operators.length; j++) {
+            if (operators[j] != null && operators[j].contains("*")) {
+                result += (numbers[j - 1] * numbers[j + 1]);
+                numbers[j - 1] = 0;
+                numbers[j + 1] = 0;
+            } else if (operators[j] != null && operators[j].contains("/")) {
+                result += (numbers[j - 1] / numbers[j + 1]);
+                numbers[j - 1] = 0;
+                numbers[j + 1] = 0;
+            }
+        }
+
+        for (int k = 0; k < operators.length; k++) {
+            if (operators[k] != null && operators[k].contains("+")) {
+                for (int l = 0; ; l++) {
+                    if (l != 0) {
+                        result += numbers[l];
+                        break;
+                    }
+                }
+            } else if (operators[k] != null && operators[k].contains("-")) {
+                for (int m = 0; ; m++) {
+                    if (m != 0) {
+                        result -= numbers[m];
+                        break;
+                    }
                 }
             }
-            case "*" -> System.out.println(fmt(n1 * n2));
-            default -> System.out.println(0);
         }
-
-        }
+        System.out.println(result);
     }
-// test
+}
+
+
+
+
+
+
+/* test */
 /* Task:
 Könnt ihr euer Programm für die folgenden Aufgaben erweitern?
     • Verhindert mögliche Fehler und gebt einen Hilfetext in Fehlerfall aus. -> should be done [Alex]
@@ -57,3 +64,5 @@ Könnt ihr euer Programm für die folgenden Aufgaben erweitern?
         o Beachtet die Punkt-vor-Strich Regel (bei mehreren Parametern).
         o Ergänzt Klammern als mögliche Eingabe.
 */
+
+
