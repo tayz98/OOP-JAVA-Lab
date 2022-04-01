@@ -4,7 +4,7 @@ package labor02;
 public class AdvancedCalculator {
 
     public static String sign(String[] operators, int number) {
-        for (int j = 0; j < number; j++) {
+        for (int j = number - 1; j >= 0; j--) {
             if (operators[j] != null && !(operators[j].contains("/") || operators[j].contains("*"))) {
                 if (operators[j].contains("+")) {
                     String tempSign = "+";
@@ -63,7 +63,7 @@ public class AdvancedCalculator {
                     numbers[j - 1] = 0;
                     numbers[j + 1] = 0;
                 } else if (sign1.contains("-")) {
-                    result -= (numbers[j - 1] * numbers[j + 1]);
+                    result -= (numbers[j - 1] / numbers[j + 1]);
                     numbers[j - 1] = 0;
                     numbers[j + 1] = 0;
                 }
