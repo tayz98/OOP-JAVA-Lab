@@ -22,6 +22,7 @@ public class AdvancedCalculator {
         for (int j = 0; j < numbers.length; j++) {
             if (numbers[j] != 0) {
                 double temp = numbers[j];
+                numbers[j] = 0;
                 return temp;
             }
         }
