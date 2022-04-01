@@ -3,8 +3,8 @@ package labor02;
 
 public class AdvancedCalculator {
 
-    public static String sign(String[] operators) {
-        for (int j = 0; j < operators.length; j++) {
+    public static String sign(String[] operators, int number) {
+        for (int j = 0; j < number; j++) {
             if (operators[j] != null && (operators[j].contains("+") || operators[j].contains("-"))) {
                 if (operators[j].contains("+")) {
                     String tempSign = "+";
@@ -17,7 +17,7 @@ public class AdvancedCalculator {
                 }
             }
         }
-        return null;
+        return "+";
     }
 
     public static double nextNumber(double[] numbers) {
@@ -45,7 +45,7 @@ public class AdvancedCalculator {
 
         for (int j = 0; j < operators.length; j++) {
             if (operators[j] != null && operators[j].contains("*")) {
-                String sign1 = sign(operators);
+                String sign1 = sign(operators, j);
                 if (sign1.contains("+")) {
                     result += (numbers[j - 1] * numbers[j + 1]);
                 } else if (sign1.contains("-")) {
@@ -55,7 +55,7 @@ public class AdvancedCalculator {
                 }
 
             } else if (operators[j] != null && operators[j].contains("/")) {
-                String sign1 = sign(operators);
+                String sign1 = sign(operators, j);
                 if (sign1.contains("+")) {
                     result += (numbers[j - 1] / numbers[j + 1]);
                 } else if (sign1.contains("-")) {
@@ -68,7 +68,7 @@ public class AdvancedCalculator {
 
         for (int k = 0; k < operators.length; k++) {
             if (operators[k] != null && operators[k].contains("-")) {
-                String sign1 = sign(operators);
+                String sign1 = sign(operators, k);
                 if (sign1.contains("-")) {
                     result += nextNumber(numbers);
                 } else if (sign1.contains("+")) {
@@ -79,7 +79,7 @@ public class AdvancedCalculator {
 
         for (int k = 0; k < operators.length; k++) {
             if (operators[k] != null && operators[k].contains("+")) {
-                String sign1 = sign(operators);
+                String sign1 = sign(operators, k);
                 if (sign1.contains("+")) {
                     result += nextNumber(numbers);
                 } else if (sign1.contains("-")) {
