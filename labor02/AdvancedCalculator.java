@@ -21,7 +21,7 @@ public class AdvancedCalculator {
     }
 
     public static double nextNumber(double[] numbers, int number2) {
-        for (int j = 0; j < number2; j++) {
+        for (int j = number2 - 1; j >= 0; j--) {
             if (numbers[j] != 0) {
                 double temp = numbers[j];
                 numbers[j] = 0;
