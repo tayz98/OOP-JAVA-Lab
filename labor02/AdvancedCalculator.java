@@ -8,9 +8,11 @@ public class AdvancedCalculator {
             if (operators[j] != null) {
                 if (operators[j].contains("+")) {
                     String tempSign = "+";
+                    operators[j] = null;
                     return tempSign;
                 } else if (operators[j].contains("-")) {
                     String tempSign = "-";
+                    operators[j] = null;
                     return tempSign;
                 }
             }
@@ -47,8 +49,7 @@ public class AdvancedCalculator {
 
                 if (sign1.contains("+")) {
                     result += (numbers[j - 1] * numbers[j + 1]);
-                }
-                if (sign1.contains("-")) {
+                } else if (sign1.contains("-")) {
                     result -= (numbers[j - 1] * numbers[j + 1]);
                     numbers[j - 1] = 0;
                     numbers[j + 1] = 0;
@@ -57,8 +58,7 @@ public class AdvancedCalculator {
             } else if (operators[j] != null && operators[j].contains("/")) {
                 if (sign1.contains("+")) {
                     result += (numbers[j - 1] / numbers[j + 1]);
-                }
-                if (sign1.contains("-")) {
+                } else if (sign1.contains("-")) {
                     result -= (numbers[j - 1] * numbers[j + 1]);
                     numbers[j - 1] = 0;
                     numbers[j + 1] = 0;
