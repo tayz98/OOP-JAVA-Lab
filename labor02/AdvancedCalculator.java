@@ -29,17 +29,17 @@ public class AdvancedCalculator {
 
         for (int k = 0; k < operators.length; k++) {
             if (operators[k] != null && operators[k].contains("+")) {
-                for (int l = 0; ; l++) {
+                for (int l = 0; l < args.length; l++) {
                     if (numbers[l] != 0) {
                         result += numbers[l];
-                        break;
+                        numbers[l] = 0;
                     }
                 }
             } else if (operators[k] != null && operators[k].contains("-")) {
-                for (int m = 0; ; m++) {
+                for (int m = 0; m < args.length; m++) {
                     if (numbers[m] != 0) {
                         result -= numbers[m];
-                        break;
+                        numbers[m] = 0;
                     }
                 }
             }
