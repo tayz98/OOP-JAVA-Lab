@@ -20,8 +20,8 @@ public class AdvancedCalculator {
         return "+";
     }
 
-    public static double nextNumber(double[] numbers) {
-        for (int j = 0; j < numbers.length; j++) {
+    public static double nextNumber(double[] numbers, int number2) {
+        for (int j = 0; j < number2; j++) {
             if (numbers[j] != 0) {
                 double temp = numbers[j];
                 numbers[j] = 0;
@@ -70,9 +70,9 @@ public class AdvancedCalculator {
             if (operators[k] != null && operators[k].contains("-")) {
                 String sign1 = sign(operators, k);
                 if (sign1.contains("-")) {
-                    result += nextNumber(numbers);
+                    result += nextNumber(numbers, k);
                 } else if (sign1.contains("+")) {
-                    result -= nextNumber(numbers);
+                    result -= nextNumber(numbers, k);
                 }
             }
         }
@@ -81,9 +81,9 @@ public class AdvancedCalculator {
             if (operators[k] != null && operators[k].contains("+")) {
                 String sign1 = sign(operators, k);
                 if (sign1.contains("+")) {
-                    result += nextNumber(numbers);
+                    result += nextNumber(numbers, k);
                 } else if (sign1.contains("-")) {
-                    result -= nextNumber(numbers);
+                    result -= nextNumber(numbers, k);
                 }
             }
         }
