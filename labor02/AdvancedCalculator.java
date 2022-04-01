@@ -77,6 +77,8 @@ public class AdvancedCalculator {
                     result += nextNumber(numbers, k);
                 } else if (sign1.contains("-")) {
                     result -= nextNumber(numbers, k);
+                } else {
+                    result += nextNumber(numbers, k);
                 }
             }
         }
@@ -87,6 +89,8 @@ public class AdvancedCalculator {
                 if (sign1.contains("-")) {
                     result += nextNumber(numbers, k);
                 } else if (sign1.contains("+")) {
+                    result -= nextNumber(numbers, k);
+                } else {
                     result -= nextNumber(numbers, k);
                 }
             }
