@@ -5,7 +5,7 @@ public class AdvancedCalculator {
 
     public static String sign(String[] operators, int number) {
         for (int j = 0; j < number; j++) {
-            if (operators[j] != null && (operators[j].contains("+") || operators[j].contains("-"))) {
+            if (operators[j] != null) {
                 if (operators[j].contains("+")) {
                     String tempSign = "+";
                     operators[j] = null;
