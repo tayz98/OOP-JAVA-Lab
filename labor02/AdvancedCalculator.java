@@ -34,7 +34,7 @@ public class AdvancedCalculator {
                 numbers[i + 1] = 0;
                 numbers[i - 1] = multNumber;
             } else if (operators[i].contains("*") && numbers[i - 1] == 0 && numbers[i + 1] != 0 && nextSign(operators, i)) {
-                miklj - haswdfhrekjgh4wertkljghrtwjkgthgkrtjhgrtjk.h
+                
             }
         }
         for (int i = 0; i < numbers.length; i++) {
