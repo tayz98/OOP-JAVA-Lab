@@ -1,5 +1,6 @@
 package labor02;
 
+import javax.crypto.spec.ChaCha20ParameterSpec;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -7,7 +8,11 @@ import java.util.List;
 public class AdvancedCalculatorNEW {
 
     public static void main(String[] args) {
-        List<String> list = new ArrayList<>(Arrays.stream(args).toList());
+        String equation = deleteSpaces(args);
+        List<String> list = createList(equation);
+
+        // List<String> list = new ArrayList<String>(Arrays.stream(args).toList());
+
         float result = 0;
 
         for (int i = 0; i < list.size(); i++) {
@@ -34,5 +39,54 @@ public class AdvancedCalculatorNEW {
             list.remove(0);
         }
         System.out.println(result);
+    }
+
+    // Funktion zum Erstellen eines Strings ohne Leerzeichen, die bei der Eingabe gemacht werden können
+    public static String deleteSpaces(String[] arr) {
+        String returnStr = "";
+        for (String s : arr) {
+            returnStr += s;
+        }
+        return returnStr;
+    }
+
+    // Funktion zum Erstellen einer Liste mit allen Elementen aus der Gleichung
+    public static ArrayList<String> createList(String str) {
+        ArrayList<String> list = new ArrayList<String>();
+
+        // Das ist nicht sauber programmiert, aber erstmal, damit die Funktion funktioniert!
+        ArrayList<String> errorList = new ArrayList<String>();
+        errorList.add("Fehler: Ungültige Eingabe!");
+        int dotCount = 0;
+
+        for (int i = 0; i < str.length(); i++) {
+            char c = str.charAt(i);
+
+            if (c == '+' || c == '-' || c == '*' || c == '/' || c == '(' || c == ')') {
+                list.add(Character.toString(c));
+            } else if (Character.isDigit(c) || c == '.') {
+                String number = Character.toString(c);
+
+                while (i + 1 < str.length() && (Character.isDigit(str.charAt(i + 1)) || str.charAt(i + 1) == '.')) {
+
+                    if (str.charAt(i + 1) == '.') {
+                        dotCount++;
+                    }
+
+                    if (dotCount > 1) {
+                        return errorList;
+                    }
+
+                    number += Character.toString(str.charAt(i + 1));
+                    i++;
+                }
+                list.add(number);
+
+            } else {
+                return errorList;
+
+            }
+        }
+        return list;
     }
 }
