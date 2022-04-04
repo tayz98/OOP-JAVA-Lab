@@ -57,6 +57,7 @@ public class AdvancedCalculatorNEW {
         // Das ist nicht sauber programmiert, aber erstmal, damit die Funktion funktioniert!
         ArrayList<String> errorList = new ArrayList<String>();
         errorList.add("Fehler: Ungültige Eingabe!");
+
         int dotCount = 0;
 
         for (int i = 0; i < str.length(); i++) {
@@ -81,6 +82,7 @@ public class AdvancedCalculatorNEW {
                     i++;
                 }
                 list.add(number);
+                dotCount = 0;
 
             } else {
                 return errorList;
