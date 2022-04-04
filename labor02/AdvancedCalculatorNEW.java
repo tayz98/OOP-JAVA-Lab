@@ -38,7 +38,7 @@ public class AdvancedCalculatorNEW {
             list.remove(1);
             list.remove(0);
         }
-        System.out.println(result);
+        System.out.println(deleteDecimal(result));
     }
 
     // Funktion zum Erstellen eines Strings ohne Leerzeichen, die bei der Eingabe gemacht werden können
@@ -88,5 +88,14 @@ public class AdvancedCalculatorNEW {
             }
         }
         return list;
+    }
+
+    // Funktion zum Abschneiden, der Nachkommastelle, falls Ergebnis eine ganze Zahl ist
+    public static String deleteDecimal(float in) {
+        if (in % 1 == 0) {
+            return Integer.toString((int)in);
+        } else {
+            return Float.toString(in);
+        }
     }
 }
