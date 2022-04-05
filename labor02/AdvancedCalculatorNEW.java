@@ -25,9 +25,13 @@ public class AdvancedCalculatorNEW {
         list.add(")");
         */
 
-        list.add("1");
+        list.add("2");
         list.add("*");
+        list.add("(");
         list.add("3");
+        list.add("+");
+        list.add("4");
+        list.add(")");
 
         /*
         for (int i = 0; i < list.size(); i++) {
@@ -39,8 +43,8 @@ public class AdvancedCalculatorNEW {
         +/
          */
 
-        System.out.println("result = " + deleteDecimal(getResult(list)));
-
+        // System.out.println("result = " + deleteDecimal(Float.parseFloat(getResult(list))));
+        getResult(list);
         //divisionAndMult((ArrayList<String>) list, result);
         //additionAndSubt((ArrayList<String>) list, result);
         // List<String> list = new ArrayList<String>(Arrays.stream(args).toList());
@@ -48,34 +52,45 @@ public class AdvancedCalculatorNEW {
         // System.out.println(deleteDecimal(result));
     }
 
-    public static float getResult(List<String> list) {
+    public static String getResult(List<String> list) {
         System.out.println("Aufruf mit folgendem Ausdruck:");
         for (String s : list) {
-            System.out.print(s);
+            System.out.print(s + " ");
         }
-        System.out.println("Laenge der Liste: " + Integer.toString(list.size()));
+        System.out.println();
 
         // Prüfen, ob Ausdruck noch Klammern enthält
         if (list.contains("(") || list.contains(")")) {
+            int numOpenBrackets = 0;
+            int numClosingBrackets = 0;
             for (int i = 0; i < list.size(); i++) {
                 String s = list.get(i);
                 if (s.equals("(")) {
-                    int numOpenBrackets = 1;
-                    int numClosingBrackets = 0;
+                    numOpenBrackets++;
                     for (int j = i + 1; j < list.size(); j++) {
-                        if (s.equals("(")) {
+                        if (list.get(j).equals("(")) {
                             numOpenBrackets++;
-                        } else if (s.equals(")")) {
+                        } else if (list.get(j).equals(")")) {
                             numClosingBrackets++;
                             if (numOpenBrackets == numClosingBrackets) {
-                                getResult(list.subList(i + 1, j));
-                                return 0.0f;
+                                // Hier ersetzen
+                                List<String> subList = new ArrayList<String>();
+                                subList = list.subList(i + 1, j);
+                                getResult(subList);
+                                //list.set(0, tmp);
+                                System.out.println("--------------------------------");
+                                for (String a: list) System.out.println(a);
+                                System.out.println("--------------------------------");
+                                System.out.println(i);
+                                System.out.println(j);
+                                //list.subList(i, j - 1).clear();
+                                break;
                             }
                         }
                     }
                     if (numOpenBrackets != numClosingBrackets) {
                         System.out.println("Anzahl Klammern stimmt nicht ueberein!");
-                        return 0.0f;
+                        return "0";
                     }
                 }
             }
@@ -85,23 +100,27 @@ public class AdvancedCalculatorNEW {
             // 1. Schritt: alle Ausdrücke multiplizieren oder dividieren
             for (int i = 0; i < list.size(); i++) {
                 if (isMultOrDivOperator(list.get(i))) {
-                    list.set(i - 1, Float.toString(divisionAndMult(list.subList(i - 1, i + 1))));
-                    list.remove(i);
-                    list.remove(i + 1);
+                    list.set(i - 1, Float.toString(divisionAndMult(list.subList(i - 1, i + 2))));
+                    list.subList(i, i + 2).clear();
+                    i--;
                 }
             }
             // 2. Schritt: alle Ausdrücke addieren oder subtrahieren
             for (int i = 0; i < list.size(); i++) {
                 if (isAddOrSubOperator(list.get(i))) {
-                    list.set(i - 1, Float.toString(additionAndSubt(list.subList(i - 1, i + 1))));
-                    list.remove(i);
-                    list.remove(i + 1);
+                    list.set(i - 1, Float.toString(additionAndSubt(list.subList(i - 1, i + 2))));
+                    list.subList(i, i + 2).clear();
+                    i--;
                 }
             }
         }
-        return 0.0f;
+
+
+        if (list.size() == 1) return list.get(0);
+        return "0";
     }
 
+    // Multiplikation oder Division einer Liste (Beispielliste: {"3", "*", "4"})
     public static float divisionAndMult(List<String> list) {
         float result = 0;
         for (int i = 0; i < list.size(); i++) {
@@ -113,6 +132,7 @@ public class AdvancedCalculatorNEW {
         return result;
     }
 
+    // Addition oder Subtraktion einer Liste (Beispielliste: {"3", "+", "4"})
     public static float additionAndSubt(List<String> list) {
         float result = 0;
         for (int i = 0; i < list.size(); i++) {
