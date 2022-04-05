@@ -4,47 +4,124 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AdvancedCalculatorNEW {
-
-    public static float additionAndSubt(ArrayList<String> list, float result) {
-        while (list.size() > 0) {
-            if (list.get(0).equals("+")) result += Float.parseFloat(list.get(1));
-            if (list.get(0).equals("-")) result -= Float.parseFloat(list.get(1));
-            list.remove(1);
-            list.remove(0);
-        }
-        return result;
-    }
-
-    public static float divisionAndMult(ArrayList<String> list, float result) {
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).equals("*") || list.get(i).equals("/")) {
-                float tmp = 0;
-
-                if (list.get(i).equals("*"))
-                    tmp = Float.parseFloat(list.get(i - 1)) * Float.parseFloat(list.get(i + 1));
-                if (list.get(i).equals("/"))
-                    tmp = Float.parseFloat(list.get(i - 1)) / Float.parseFloat(list.get(i + 1));
-                list.set(i, String.valueOf(tmp));
-                list.remove(i + 1);
-                list.remove(i - 1);
-                i--;
-            }
-        }
-
-        result = Float.parseFloat(list.get(0));
-        list.remove(0);
-        return result;
-    }
-
     public static void main(String[] args) {
-        String equation = deleteSpaces(args);
-        List<String> list = createList(equation);
+        //String equation = deleteSpaces(args);
+        //List<String> list = createList(equation);
+
         float result = 0;
-        divisionAndMult((ArrayList<String>) list, result);
-        additionAndSubt((ArrayList<String>) list, result);
+
+        List<String> list = new ArrayList<>();
+        /*
+        list.add("4");
+        list.add("*");
+        list.add("(");
+        list.add("4");
+        list.add("+");
+        list.add("(");
+        list.add("4");
+        list.add("+");
+        list.add("3.3");
+        list.add(")");
+        list.add(")");
+        */
+
+        list.add("1");
+        list.add("*");
+        list.add("3");
+
+        /*
+        for (int i = 0; i < list.size(); i++) {
+            if (i == 3) {
+                list.remove(i);
+            }
+            System.out.println("Index: " + Integer.toString(i) + " || Inhalt: " + list.get(i) + " || Laenge list: " + list.size());
+        }
+        +/
+         */
+
+        System.out.println("result = " + deleteDecimal(getResult(list)));
+
+        //divisionAndMult((ArrayList<String>) list, result);
+        //additionAndSubt((ArrayList<String>) list, result);
         // List<String> list = new ArrayList<String>(Arrays.stream(args).toList());
 
-        System.out.println(deleteDecimal(result));
+        // System.out.println(deleteDecimal(result));
+    }
+
+    public static float getResult(List<String> list) {
+        System.out.println("Aufruf mit folgendem Ausdruck:");
+        for (String s : list) {
+            System.out.print(s);
+        }
+        System.out.println("Laenge der Liste: " + Integer.toString(list.size()));
+
+        // Prüfen, ob Ausdruck noch Klammern enthält
+        if (list.contains("(") || list.contains(")")) {
+            for (int i = 0; i < list.size(); i++) {
+                String s = list.get(i);
+                if (s.equals("(")) {
+                    int numOpenBrackets = 1;
+                    int numClosingBrackets = 0;
+                    for (int j = i + 1; j < list.size(); j++) {
+                        if (s.equals("(")) {
+                            numOpenBrackets++;
+                        } else if (s.equals(")")) {
+                            numClosingBrackets++;
+                            if (numOpenBrackets == numClosingBrackets) {
+                                getResult(list.subList(i + 1, j));
+                                return 0.0f;
+                            }
+                        }
+                    }
+                    if (numOpenBrackets != numClosingBrackets) {
+                        System.out.println("Anzahl Klammern stimmt nicht ueberein!");
+                        return 0.0f;
+                    }
+                }
+            }
+
+
+        } else {
+            // 1. Schritt: alle Ausdrücke multiplizieren oder dividieren
+            for (int i = 0; i < list.size(); i++) {
+                if (isMultOrDivOperator(list.get(i))) {
+                    list.set(i - 1, Float.toString(divisionAndMult(list.subList(i - 1, i + 1))));
+                    list.remove(i);
+                    list.remove(i + 1);
+                }
+            }
+            // 2. Schritt: alle Ausdrücke addieren oder subtrahieren
+            for (int i = 0; i < list.size(); i++) {
+                if (isAddOrSubOperator(list.get(i))) {
+                    list.set(i - 1, Float.toString(additionAndSubt(list.subList(i - 1, i + 1))));
+                    list.remove(i);
+                    list.remove(i + 1);
+                }
+            }
+        }
+        return 0.0f;
+    }
+
+    public static float divisionAndMult(List<String> list) {
+        float result = 0;
+        for (int i = 0; i < list.size(); i++) {
+            if (isOperator(list.get(i))) {
+                if (list.get(i).equals("*")) result = Float.parseFloat(list.get(i - 1)) * Float.parseFloat(list.get(i + 1));
+                if (list.get(i).equals("/")) result = Float.parseFloat(list.get(i - 1)) / Float.parseFloat(list.get(i + 1));
+            }
+        }
+        return result;
+    }
+
+    public static float additionAndSubt(List<String> list) {
+        float result = 0;
+        for (int i = 0; i < list.size(); i++) {
+            if (isOperator(list.get(i))) {
+                if (list.get(i).equals("+")) result = Float.parseFloat(list.get(i - 1)) + Float.parseFloat(list.get(i + 1));
+                if (list.get(i).equals("-")) result = Float.parseFloat(list.get(i - 1)) - Float.parseFloat(list.get(i + 1));
+            }
+        }
+        return result;
     }
 
     // Funktion zum Erstellen eines Strings ohne Leerzeichen, die bei der Eingabe gemacht werden können
@@ -104,6 +181,42 @@ public class AdvancedCalculatorNEW {
             return Integer.toString((int)in);
         } else {
             return Float.toString(in);
+        }
+    }
+
+    public static boolean isNumeric(String s) {
+        if (s == null) {
+            return false;
+        }
+        try {
+            double d = Double.parseDouble(s);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean isOperator(String s) {
+        if (s.equals("+") || s.equals("-") || s.equals("*") || s.equals("/")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static boolean isAddOrSubOperator(String s) {
+        if (s.equals("+") || s.equals("-")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static boolean isMultOrDivOperator(String s) {
+        if (s.equals("*") || s.equals("/")) {
+            return true;
+        } else {
+            return false;
         }
     }
 }

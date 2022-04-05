@@ -10,7 +10,7 @@ public class AdvancedCalculator {
                 return operators[i];
             }
         }
-
+        return "hallo";
     }
 
 
@@ -26,6 +26,7 @@ public class AdvancedCalculator {
             }
         }
 
+        /*
         for (int i = 0; i < operators.length; i++) {
             double multNumber = 0;
             if (operators[i].contains("*") && numbers[i - 1] != 0 && numbers[i + 1] != 0) {
@@ -52,6 +53,8 @@ public class AdvancedCalculator {
             }
         }
         System.out.println(result);
+
+         */
     }
 }
 
