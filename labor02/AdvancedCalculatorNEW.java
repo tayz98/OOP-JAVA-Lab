@@ -1,20 +1,21 @@
 package labor02;
 
-import javax.crypto.spec.ChaCha20ParameterSpec;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class AdvancedCalculatorNEW {
 
-    public static void main(String[] args) {
-        String equation = deleteSpaces(args);
-        List<String> list = createList(equation);
+    public static float additionAndSubt(ArrayList<String> list, float result) {
+        while (list.size() > 0) {
+            if (list.get(0).equals("+")) result += Float.parseFloat(list.get(1));
+            if (list.get(0).equals("-")) result -= Float.parseFloat(list.get(1));
+            list.remove(1);
+            list.remove(0);
+        }
+        return result;
+    }
 
-        // List<String> list = new ArrayList<String>(Arrays.stream(args).toList());
-
-        float result = 0;
-
+    public static float divisionAndMult(ArrayList<String> list, float result) {
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).equals("*") || list.get(i).equals("/")) {
                 float tmp = 0;
@@ -32,12 +33,17 @@ public class AdvancedCalculatorNEW {
 
         result = Float.parseFloat(list.get(0));
         list.remove(0);
-        while (list.size() > 0) {
-            if (list.get(0).equals("+")) result += Float.parseFloat(list.get(1));
-            if (list.get(0).equals("-")) result -= Float.parseFloat(list.get(1));
-            list.remove(1);
-            list.remove(0);
-        }
+        return result;
+    }
+
+    public static void main(String[] args) {
+        String equation = deleteSpaces(args);
+        List<String> list = createList(equation);
+        float result = 0;
+        divisionAndMult((ArrayList<String>) list, result);
+        additionAndSubt((ArrayList<String>) list, result);
+        // List<String> list = new ArrayList<String>(Arrays.stream(args).toList());
+
         System.out.println(deleteDecimal(result));
     }
 
