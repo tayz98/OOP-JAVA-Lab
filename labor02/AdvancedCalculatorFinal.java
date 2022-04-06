@@ -1,7 +1,7 @@
 /**
  * @name AdvancedCalculator
  * @package labor02
- * @file AdvancedCalculatorNEW.java
+ * @file AdvancedCalculatorFinal.java
  * @authors Veronica Zylla, Sören Zacharias, Alexander Nachtigal
  * @email veronica.zylla@student.fh-kiel.de, soeren.zacharias@student.fh-kiel.de, alexander.nachtigal@student.fh-kiel.de
  * @description Fortgeschrittener Profi-Rechner für +, -, *, /, () und (positive und negative) Fließkommazahlen
@@ -11,7 +11,7 @@ package labor02;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdvancedCalculatorNEW {
+public class AdvancedCalculatorFinal {
 
     /*
     Zum Aufrufen des Programmes bitte entweder:
@@ -145,19 +145,20 @@ public class AdvancedCalculatorNEW {
         return 0;
     }
 
-    // Funktion zum Erstellen einer Liste mit allen Elementen aus der Gleichung
-    // Gibt Fehler aus, falls nicht akzeptierte Zeichen oder bspw. 2 Trennzeichen in einer Zahl eingegeben werden
-    // Prüft auf Richtigkeit der Eingabe
+    /* Funktion zum Erstellen einer Liste mit allen Elementen aus der Gleichung
+    * Gibt Fehler aus, falls nicht akzeptierte Zeichen oder bspw. 2 Trennzeichen in einer Zahl eingegeben werden
+    * Prüft auf Richtigkeit der Eingabe
+     */
     public static ArrayList<String> createList(String str) {
         ArrayList<String> list = new ArrayList<>();
 
-        // Leere Liste zur Rückgabe im Fehlerfall
-        ArrayList<String> errorList = new ArrayList<>();
+        ArrayList<String> errorList = new ArrayList<>(); // Leere Liste zur Rückgabe im Fehlerfall
         int dotCount = 0;
+        boolean sign = false;
 
         for (int i = 0; i < str.length(); i++) {
             char c = str.charAt(i);
-            boolean sign = false; // boolean zum Überprüfen, um es sich bei einem Minus um ein Vorzeichen oder ein Operator handelt
+             // boolean zum Überprüfen, um es sich bei einem Minus um ein Vorzeichen oder ein Operator handelt
             if (c == '+' || c == '*' || c == '/' || c == '(' || c == ')') {
                 list.add(Character.toString(c));
             } else if (c == '-') {
@@ -194,39 +195,40 @@ public class AdvancedCalculatorNEW {
             return list;
         }
 
-        // Funktion zum Abschneiden, der Nachkommastelle, falls Ergebnis eine ganze Zahl ist
-        public static String deleteDecimal ( float in){
-            if (in % 1 == 0) {
-                return Integer.toString((int) in);
-            } else {
-                return Float.toString(in);
-            }
-        }
-
-        // Funktion prüft, ob String ein Rechenoperator ist
-        public static boolean isOperator (String s){
-            return s.equals("+") || s.equals("-") || s.equals("*") || s.equals("/");
-        }
-
-        // Funktion prüft, ob Operator "+" oder "-" ist
-        public static boolean isAddOrSubOperator (String s){
-            return s.equals("+") || s.equals("-");
-        }
-
-        // Funktion prüft, ob Operator "*" oder "/" ist
-        public static boolean isMultOrDivOperator (String s){
-            return s.equals("*") || s.equals("/");
-        }
-
-        // Funktion zum Erstellen einer Sublist, kopiert einen Teil von startIndex bis endIndex in eine neue Liste und gibt diese zurück
-        public static List<String> createSublist (List < String > inList,int startIndex, int endIndex){
-            List<String> returnList = new ArrayList<String>();
-            returnList.addAll(inList);
-            for (int i = returnList.size() - 1; i >= 0; i--) {
-                if (i > endIndex || i < startIndex) {
-                    returnList.remove(i);
-                }
-            }
-            return returnList;
+    // Funktion zum Abschneiden, der Nachkommastelle, falls Ergebnis eine ganze Zahl ist
+    public static String deleteDecimal ( float in){
+        if (in % 1 == 0) {
+            return Integer.toString((int) in);
+        } else {
+            return Float.toString(in);
         }
     }
+
+    // Funktion prüft, ob String ein Rechenoperator ist
+    public static boolean isOperator (String s){
+        return s.equals("+") || s.equals("-") || s.equals("*") || s.equals("/");
+    }
+
+    // Funktion prüft, ob Operator "+" oder "-" ist
+    public static boolean isAddOrSubOperator (String s){
+        return s.equals("+") || s.equals("-");
+    }
+
+    // Funktion prüft, ob Operator "*" oder "/" ist
+    public static boolean isMultOrDivOperator (String s){
+        return s.equals("*") || s.equals("/");
+    }
+
+    // Funktion zum Erstellen einer Sublist, kopiert einen Teil von startIndex bis endIndex in eine neue Liste und gibt diese zurück
+    public static List<String> createSublist (List < String > inList,int startIndex, int endIndex){
+        List<String> returnList = new ArrayList<String>();
+        returnList.addAll(inList);
+        for (int i = returnList.size() - 1; i >= 0; i--) {
+            if (i > endIndex || i < startIndex) {
+                returnList.remove(i);
+            }
+        }
+        return returnList;
+    }
+
+}
