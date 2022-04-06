@@ -98,8 +98,8 @@ public class AdvancedCalculatorFinal {
                 i--; // Durch das clear der Liste rutscht der Rest der Liste nach vorne und i hat einen neuen Inhalt, muss deswegen neu überprüft werden
             }
         }
-        if (list.size() == 1) return list.get(0);
-        return "0";
+        if (list.size() == 1) return list.get(0); // Finale Ausgabe der Funktion, sobald der Term soweit zusammengerechnet ist, dass ein Ergebnis vorliegt
+        return "0"; // In Fehlerfällen wird 0 zurückgegeben
     }
 
     // Multiplikation oder Division einer Liste (Beispielliste: {"3", "*", "4"})
