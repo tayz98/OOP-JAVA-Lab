@@ -4,86 +4,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AdvancedCalculatorNEW {
+
+    /*
+
+    Zum Aufrufen des Programmes bitte entweder:
+    - die Eingabeaufforderung nutzen und Term normal eingeben.
+    [Bsp: ((9+9)+6)−3*4/3−2−2*1+(3−2)*3 ]
+    - PowerShell nutzen (oder Terminal direkt in der IDE) und den Termin mit "" umschließen.
+    [Bsp: "((9+9)+6)−3*4/3−2−2*1+(3−2)*3" ]
+
+    Der Term kann sowohl ohne als auch mit Leerzeichen eingegeben werden.
+
+     */
+
     public static void main(String[] args) {
+        // Einlesen der Argumente und löschen von Leerzeichen
         String equation = deleteSpaces(args);
+        // Zmwandeln des Strings in eine Liste
         List<String> list = createList(equation);
-        for (int i = 0; i < args.length; i++) {
-            System.out.print(args[i]);
-        }
-
-        //List<String> list = new ArrayList<>();
-        // Beispiel 1
-        /*
-        list.add("4");
-        list.add("*");
-        list.add("(");
-        list.add("4");
-        list.add("+");
-        list.add("(");
-        list.add("4");
-        list.add("+");
-        list.add("3.3");
-        list.add(")");
-        list.add(")");
-        */
-
-        // Beispiel 2
-        /*
-        list.add("(");
-        list.add("2");
-        list.add("+");
-        list.add("3");
-        list.add(")");
-        list.add("*");
-        list.add("(");
-        list.add("3");
-        list.add("-");
-        list.add("2");
-        list.add(")");
-        */
-
-        // Beispiel 3
-        /*
-        list.add("(");
-        list.add("(");
-        list.add("9");
-        list.add("+");
-        list.add("9");
-        list.add(")");
-        list.add("+");
-        list.add("6");
-        list.add(")");
-        list.add("-");
-        list.add("3");
-        list.add("*");
-        list.add("4");
-        list.add("/");
-        list.add("3");
-        list.add("-");
-        list.add("2");
-        list.add("-");
-        list.add("2");
-        list.add("*");
-        list.add("1");
-        list.add("+");
-        list.add("(");
-        list.add("3");
-        list.add("-");
-        list.add("2");
-        list.add(")");
-        list.add("*");
-        list.add("3");
-        */
-
-        System.out.println("result = " + deleteDecimal(Float.parseFloat(getResult(list))));
+        // Berechnung des Terms
+        System.out.println("Final result = " + deleteDecimal(Float.parseFloat(getResult(list))));
     }
 
+    // Funktion bekommt einen String als Übergabe und gibt ein Ergebnis aus
+    // wird rekursiv genutzt, damit Ausdrücke in Klammern ausgerechnet werden
     public static String getResult(List<String> list) {
-        System.out.println("Aufruf mit folgendem Ausdruck:");
+        System.out.println("Following term will be calculated:");
         list.forEach(System.out::print);
         System.out.println();
+        System.out.println("-----------------------------------");
 
         // Prüfen, ob Ausdruck noch Klammern enthält
+        // dazu wird nach geöffneten Klammern und der dazugehörigen schließenden Klammer gesucht und der Ausdruck innerhalb der Klammer rekursiv aufgerufen
         if (list.contains("(") || list.contains(")")) {
             int numOpenBrackets = 0;
             int numClosingBrackets = 0;
@@ -105,8 +57,9 @@ public class AdvancedCalculatorNEW {
                             }
                         }
                     }
+                    // Falls die Anzahl an öffnenden und schließenden Klammern nicht übereinstimmt, gibt er ein Fehler aus
                     if (numOpenBrackets != numClosingBrackets) {
-                        System.out.println("Anzahl Klammern stimmt nicht ueberein!");
+                        System.out.println("Number of brackets doesn't match!");
                         return "0";
                     }
                 }
@@ -134,26 +87,36 @@ public class AdvancedCalculatorNEW {
 
     // Multiplikation oder Division einer Liste (Beispielliste: {"3", "*", "4"})
     public static float divisionAndMult(List<String> list) {
-        float result = 0;
-        for (int i = 0; i < list.size(); i++) {
-            if (isOperator(list.get(i))) {
-                if (list.get(i).equals("*")) result = Float.parseFloat(list.get(i - 1)) * Float.parseFloat(list.get(i + 1));
-                if (list.get(i).equals("/")) result = Float.parseFloat(list.get(i - 1)) / Float.parseFloat(list.get(i + 1));
+        try {
+            float result = 0;
+            for (int i = 0; i < list.size(); i++) {
+                if (isOperator(list.get(i))) {
+                    if (list.get(i).equals("*")) result = Float.parseFloat(list.get(i - 1)) * Float.parseFloat(list.get(i + 1));
+                    if (list.get(i).equals("/")) result = Float.parseFloat(list.get(i - 1)) / Float.parseFloat(list.get(i + 1));
+                }
             }
+            return result;
+        } catch (Exception e) {
+            System.out.println("Something went wrong! Check the input again!");
         }
-        return result;
+        return 0;
     }
 
     // Addition oder Subtraktion einer Liste (Beispielliste: {"3", "+", "4"})
     public static float additionAndSubt(List<String> list) {
-        float result = 0;
-        for (int i = 0; i < list.size(); i++) {
-            if (isOperator(list.get(i))) {
-                if (list.get(i).equals("+")) result = Float.parseFloat(list.get(i - 1)) + Float.parseFloat(list.get(i + 1));
-                if (list.get(i).equals("-")) result = Float.parseFloat(list.get(i - 1)) - Float.parseFloat(list.get(i + 1));
+        try {
+            float result = 0;
+            for (int i = 0; i < list.size(); i++) {
+                if (isOperator(list.get(i))) {
+                    if (list.get(i).equals("+")) result = Float.parseFloat(list.get(i - 1)) + Float.parseFloat(list.get(i + 1));
+                    if (list.get(i).equals("-")) result = Float.parseFloat(list.get(i - 1)) - Float.parseFloat(list.get(i + 1));
+                }
             }
+            return result;
+        } catch (Exception e) {
+            System.out.println("Something went wrong! Check the input again!");
         }
-        return result;
+        return 0;
     }
 
     // Funktion zum Erstellen eines Strings ohne Leerzeichen, die bei der Eingabe gemacht werden können
