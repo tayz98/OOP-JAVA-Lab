@@ -4,11 +4,12 @@
  * @file Calculator.java
  * @authors Veronica Zylla, Sören Zacharias, Alexander Nachtigal
  * @email veronica.zylla@student.fh-kiel.de, soeren.zacharias@student.fh-kiel.de, alexander.nachtigal@student.fh-kiel.de
+ * @description: Einfacher Taschenrechner, welcher zwei Integer Zahlen akzeptiert. 
  */
 
 package labor02;
 
-public class Calculator {        // this programm is a very basic calculator without exception handling.
+public class Calculator {        
 
     public static void main(String[] args) {
 
@@ -36,17 +37,3 @@ public class Calculator {        // this programm is a very basic calculator wit
         }
     }
 }
-
-
-/* Task: 
-Programmiert in Java einen einfachen Taschenrechner, der drei Parameter über die
-Kommandozeile übergeben bekommt. Der erste und dritte Parameter soll eine (Integer) Zahl
-sein, der zweite Parameter eine Grundrechenart (+, -, *, /). Das Programm soll dann das
-Ergebnis dieser Rechnung ausgeben.
-
-Bsp:
-$java Calculator.java 3 + 5
-8
-$java Calculator.java 5 / 2
-2.5
-*/ 
