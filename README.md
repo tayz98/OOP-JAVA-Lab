@@ -1,4 +1,4 @@
-# OOP_Labor FH Kiel 
+# OOP_Labor FH Kiel 🎓
 
 All coding tasks from the OOP Lab will be documented in this repository. 
 
