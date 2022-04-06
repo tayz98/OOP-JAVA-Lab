@@ -66,7 +66,7 @@ public class AdvancedCalculatorNEW {
                         } else if (list.get(j).equals(")")) {
                             numClosingBrackets++;
                             if (numOpenBrackets == numClosingBrackets) {
-                                list.set(i , getResult(createSublist(list, i + 1, j - 1)));
+                                list.set(i, getResult(createSublist(list, i + 1, j - 1)));
                                 list.subList(i + 1, j + 1).clear();
                                 numOpenBrackets = 0;
                                 numClosingBrackets = 0;
@@ -82,22 +82,22 @@ public class AdvancedCalculatorNEW {
                 }
             }
         }
-            // 1. Schritt: alle Ausdrücke multiplizieren oder dividieren
-            for (int i = 0; i < list.size(); i++) {
-                if (isMultOrDivOperator(list.get(i))) {
-                    list.set(i - 1, Float.toString(divisionAndMult(list.subList(i - 1, i + 2))));
-                    list.subList(i, i + 2).clear();
-                    i--; // Durch das clear der Liste rutscht der Rest der Liste nach vorne und i hat einen neuen Inhalt, muss deswegen neu überprüft werden
-                }
+        // 1. Schritt: alle Ausdrücke multiplizieren oder dividieren
+        for (int i = 0; i < list.size(); i++) {
+            if (isMultOrDivOperator(list.get(i))) {
+                list.set(i - 1, Float.toString(divisionAndMult(list.subList(i - 1, i + 2))));
+                list.subList(i, i + 2).clear();
+                i--; // Durch das clear der Liste rutscht der Rest der Liste nach vorne und i hat einen neuen Inhalt, muss deswegen neu überprüft werden
             }
-            // 2. Schritt: alle Ausdrücke addieren oder subtrahieren
-            for (int i = 0; i < list.size(); i++) {
-                if (isAddOrSubOperator(list.get(i))) {
-                    list.set(i - 1, Float.toString(additionAndSubt(list.subList(i - 1, i + 2))));
-                    list.subList(i, i + 2).clear();
-                    i--; // Durch das clear der Liste rutscht der Rest der Liste nach vorne und i hat einen neuen Inhalt, muss deswegen neu überprüft werden
-                }
+        }
+        // 2. Schritt: alle Ausdrücke addieren oder subtrahieren
+        for (int i = 0; i < list.size(); i++) {
+            if (isAddOrSubOperator(list.get(i))) {
+                list.set(i - 1, Float.toString(additionAndSubt(list.subList(i - 1, i + 2))));
+                list.subList(i, i + 2).clear();
+                i--; // Durch das clear der Liste rutscht der Rest der Liste nach vorne und i hat einen neuen Inhalt, muss deswegen neu überprüft werden
             }
+        }
         if (list.size() == 1) return list.get(0);
         return "0";
     }
@@ -108,7 +108,8 @@ public class AdvancedCalculatorNEW {
             float result = 0;
             for (int i = 0; i < list.size(); i++) {
                 if (isOperator(list.get(i))) {
-                    if (list.get(i).equals("*")) result = Float.parseFloat(list.get(i - 1)) * Float.parseFloat(list.get(i + 1));
+                    if (list.get(i).equals("*"))
+                        result = Float.parseFloat(list.get(i - 1)) * Float.parseFloat(list.get(i + 1));
                     if (list.get(i).equals("/")) {
                         if (list.get(i + 1).equals("0") || list.get(i + 1).equals("0.0")) {     // Falls durch 0 geteilt wird, soll eine Fehlermeldung ausgegeben werden.
                             System.out.println("Dividing by 0 is not allowed. Program ends here with exit code 42..");
@@ -131,8 +132,10 @@ public class AdvancedCalculatorNEW {
             float result = 0;
             for (int i = 0; i < list.size(); i++) {
                 if (isOperator(list.get(i))) {
-                    if (list.get(i).equals("+")) result = Float.parseFloat(list.get(i - 1)) + Float.parseFloat(list.get(i + 1));
-                    if (list.get(i).equals("-")) result = Float.parseFloat(list.get(i - 1)) - Float.parseFloat(list.get(i + 1));
+                    if (list.get(i).equals("+"))
+                        result = Float.parseFloat(list.get(i - 1)) + Float.parseFloat(list.get(i + 1));
+                    if (list.get(i).equals("-"))
+                        result = Float.parseFloat(list.get(i - 1)) - Float.parseFloat(list.get(i + 1));
                 }
             }
             return result;
@@ -167,7 +170,7 @@ public class AdvancedCalculatorNEW {
                 if (c == '.') dotCount++;
                     String number = "";
                     if (sign) {
-                        number = ("-" + c);
+                        number = "-" + c;
                         sign = false;
                     } else {
                         number = Character.toString(c);
@@ -191,39 +194,39 @@ public class AdvancedCalculatorNEW {
             return list;
         }
 
-    // Funktion zum Abschneiden, der Nachkommastelle, falls Ergebnis eine ganze Zahl ist
-    public static String deleteDecimal(float in) {
-        if (in % 1 == 0) {
-            return Integer.toString((int)in);
-        } else {
-            return Float.toString(in);
-        }
-    }
-
-    // Funktion prüft, ob String ein Rechenoperator ist
-    public static boolean isOperator(String s) {
-        return s.equals("+") || s.equals("-") || s.equals("*") || s.equals("/");
-    }
-
-    // Funktion prüft, ob Operator "+" oder "-" ist
-    public static boolean isAddOrSubOperator(String s) {
-        return s.equals("+") || s.equals("-");
-    }
-
-    // Funktion prüft, ob Operator "*" oder "/" ist
-    public static boolean isMultOrDivOperator(String s) {
-        return s.equals("*") || s.equals("/");
-    }
-
-    // Funktion zum Erstellen einer Sublist, kopiert einen Teil von startIndex bis endIndex in eine neue Liste und gibt diese zurück
-    public static List<String> createSublist(List<String> inList, int startIndex, int endIndex) {
-        List<String> returnList = new ArrayList<String>();
-        returnList.addAll(inList);
-        for (int i = returnList.size() - 1; i >= 0; i--) {
-            if (i > endIndex || i < startIndex) {
-                returnList.remove(i);
+        // Funktion zum Abschneiden, der Nachkommastelle, falls Ergebnis eine ganze Zahl ist
+        public static String deleteDecimal ( float in){
+            if (in % 1 == 0) {
+                return Integer.toString((int) in);
+            } else {
+                return Float.toString(in);
             }
         }
-        return returnList;
+
+        // Funktion prüft, ob String ein Rechenoperator ist
+        public static boolean isOperator (String s){
+            return s.equals("+") || s.equals("-") || s.equals("*") || s.equals("/");
+        }
+
+        // Funktion prüft, ob Operator "+" oder "-" ist
+        public static boolean isAddOrSubOperator (String s){
+            return s.equals("+") || s.equals("-");
+        }
+
+        // Funktion prüft, ob Operator "*" oder "/" ist
+        public static boolean isMultOrDivOperator (String s){
+            return s.equals("*") || s.equals("/");
+        }
+
+        // Funktion zum Erstellen einer Sublist, kopiert einen Teil von startIndex bis endIndex in eine neue Liste und gibt diese zurück
+        public static List<String> createSublist (List < String > inList,int startIndex, int endIndex){
+            List<String> returnList = new ArrayList<String>();
+            returnList.addAll(inList);
+            for (int i = returnList.size() - 1; i >= 0; i--) {
+                if (i > endIndex || i < startIndex) {
+                    returnList.remove(i);
+                }
+            }
+            return returnList;
+        }
     }
-}
