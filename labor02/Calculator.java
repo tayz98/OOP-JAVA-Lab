@@ -4,7 +4,6 @@
  * @file Calculator.java
  * @authors Veronica Zylla, Sören Zacharias, Alexander Nachtigal
  * @email veronica.zylla@student.fh-kiel.de, soeren.zacharias@student.fh-kiel.de, alexander.nachtigal@student.fh-kiel.de
- * @link https://github.com/tayz98/OOP_Labor/tree/main/labor02
  */
 
 package labor02;
