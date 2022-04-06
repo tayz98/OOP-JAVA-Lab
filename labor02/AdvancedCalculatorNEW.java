@@ -1,29 +1,46 @@
-package labor02;
+/**
+ * @name AdvancedCalculator
+ * @package labor02
+ * @file AdvancedCalculatorNEW.java
+ * @authors Veronica Zylla, Sören Zacharias, Alexander Nachtigal
+ * @email veronica.zylla@student.fh-kiel.de, soeren.zacharias@student.fh-kiel.de, alexander.nachtigal@student.fh-kiel.de
+ * @description Fortgeschrittener Profi-Rechner für +, -, *, /, () und (positive und negative) Fließkommazahlen
+ */
 
+package labor02;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AdvancedCalculatorNEW {
 
     /*
-
     Zum Aufrufen des Programmes bitte entweder:
-    - die Eingabeaufforderung nutzen und Term normal eingeben.
-    [Bsp: ((9+9)+6)−3*4/3−2−2*1+(3−2)*3 ]
-    - PowerShell nutzen (oder Terminal direkt in der IDE) und den Termin mit "" umschließen.
-    [Bsp: "((9+9)+6)−3*4/3−2−2*1+(3−2)*3" ]
+    - die Eingabeaufforderung/CMD/command prompt nutzen und Term normal eingeben.
+    [Bsp: ((9+9)+6)−3*4/3−2−2*1+(3−2)*3]
+    - PowerShell nutzen und den Term mit "" umschließen.
+    [Bsp: "((9+9)+6)−3*4/3−2−2*1+(3−2)*3"]
 
     Der Term kann sowohl ohne als auch mit Leerzeichen eingegeben werden.
-
      */
 
     public static void main(String[] args) {
         // Einlesen der Argumente und löschen von Leerzeichen
         String equation = deleteSpaces(args);
-        // Zmwandeln des Strings in eine Liste
+        // Umwandeln des Strings in eine Liste
         List<String> list = createList(equation);
+        // Falls eine falsche Eingabe getätigt wurde, bricht das Programm hier ab
+        if (list.isEmpty()) System.exit(0);
         // Berechnung des Terms
         System.out.println("Final result = " + deleteDecimal(Float.parseFloat(getResult(list))));
+    }
+
+    // Funktion zum Erstellen eines Strings des Eingabeterms ohne Leerzeichen, die bei der Eingabe gemacht werden können
+    public static String deleteSpaces(String[] arr) {
+        String returnStr = "";
+        for (String s : arr) {
+            returnStr += s;
+        }
+        return returnStr;
     }
 
     // Funktion bekommt einen String als Übergabe und gibt ein Ergebnis aus
@@ -70,7 +87,7 @@ public class AdvancedCalculatorNEW {
                 if (isMultOrDivOperator(list.get(i))) {
                     list.set(i - 1, Float.toString(divisionAndMult(list.subList(i - 1, i + 2))));
                     list.subList(i, i + 2).clear();
-                    i--;
+                    i--; // Durch das clear der Liste rutscht der Rest der Liste nach vorne und i hat einen neuen Inhalt, muss deswegen neu überprüft werden
                 }
             }
             // 2. Schritt: alle Ausdrücke addieren oder subtrahieren
@@ -78,7 +95,7 @@ public class AdvancedCalculatorNEW {
                 if (isAddOrSubOperator(list.get(i))) {
                     list.set(i - 1, Float.toString(additionAndSubt(list.subList(i - 1, i + 2))));
                     list.subList(i, i + 2).clear();
-                    i--;
+                    i--; // Durch das clear der Liste rutscht der Rest der Liste nach vorne und i hat einen neuen Inhalt, muss deswegen neu überprüft werden
                 }
             }
         if (list.size() == 1) return list.get(0);
@@ -119,52 +136,39 @@ public class AdvancedCalculatorNEW {
         return 0;
     }
 
-    // Funktion zum Erstellen eines Strings ohne Leerzeichen, die bei der Eingabe gemacht werden können
-    public static String deleteSpaces(String[] arr) {
-        String returnStr = "";
-        for (String s : arr) {
-            returnStr += s;
-        }
-        return returnStr;
-    }
-
     // Funktion zum Erstellen einer Liste mit allen Elementen aus der Gleichung
+    // Gibt Fehler aus, falls nicht akzeptierte Zeichen oder bspw. 2 Trennzeichen in einer Zahl eingegeben werden
+    // Prüft auf Richtigkeit der Eingabe
     public static ArrayList<String> createList(String str) {
-        ArrayList<String> list = new ArrayList<String>();
+        ArrayList<String> list = new ArrayList<>();
 
-        // Das ist nicht sauber programmiert, aber erstmal, damit die Funktion funktioniert!
-        ArrayList<String> errorList = new ArrayList<String>();
-        errorList.add("Fehler: Ungültige Eingabe!");
+        // Leere Liste zur Rückgabe im Fehlerfall
+        ArrayList<String> errorList = new ArrayList<>();
 
         int dotCount = 0;
 
         for (int i = 0; i < str.length(); i++) {
             char c = str.charAt(i);
+            if (isOperator(Character.toString(c)) || c == '(' || c == ')') {
 
-            if (c == '+' || c == '-' || c == '*' || c == '/' || c == '(' || c == ')') {
                 list.add(Character.toString(c));
             } else if (Character.isDigit(c) || c == '.') {
+                if (c == '.') dotCount++;
                 String number = Character.toString(c);
-
                 while (i + 1 < str.length() && (Character.isDigit(str.charAt(i + 1)) || str.charAt(i + 1) == '.')) {
-
-                    if (str.charAt(i + 1) == '.') {
-                        dotCount++;
-                    }
-
+                    if (str.charAt(i + 1) == '.') dotCount++;
                     if (dotCount > 1) {
+                        System.out.println("Error: Too many dots! Program ends here...");
                         return errorList;
                     }
-
                     number += Character.toString(str.charAt(i + 1));
-                    i++;
+                    i++; // Manuelles Erhöhen von i, da die nächsten Zeichen mit zur Nummer gehören und in der for-Schleife übersprungen werden müssen
                 }
                 list.add(number);
                 dotCount = 0;
-
             } else {
+                System.out.println("Error: Wrong input! Program ends here...");
                 return errorList;
-
             }
         }
         return list;
