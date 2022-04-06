@@ -5,12 +5,14 @@ import java.util.List;
 
 public class AdvancedCalculatorNEW {
     public static void main(String[] args) {
-        //String equation = deleteSpaces(args);
-        //List<String> list = createList(equation);
+        String equation = deleteSpaces(args);
+        List<String> list = createList(equation);
+        for (int i = 0; i < args.length; i++) {
+            System.out.print(args[i]);
+        }
 
-        float result = 0;
-
-        List<String> list = new ArrayList<>();
+        //List<String> list = new ArrayList<>();
+        // Beispiel 1
         /*
         list.add("4");
         list.add("*");
@@ -25,38 +27,60 @@ public class AdvancedCalculatorNEW {
         list.add(")");
         */
 
+        // Beispiel 2
+        /*
+        list.add("(");
         list.add("2");
+        list.add("+");
+        list.add("3");
+        list.add(")");
         list.add("*");
         list.add("(");
         list.add("3");
-        list.add("+");
-        list.add("4");
+        list.add("-");
+        list.add("2");
         list.add(")");
+        */
 
+        // Beispiel 3
         /*
-        for (int i = 0; i < list.size(); i++) {
-            if (i == 3) {
-                list.remove(i);
-            }
-            System.out.println("Index: " + Integer.toString(i) + " || Inhalt: " + list.get(i) + " || Laenge list: " + list.size());
-        }
-        +/
-         */
+        list.add("(");
+        list.add("(");
+        list.add("9");
+        list.add("+");
+        list.add("9");
+        list.add(")");
+        list.add("+");
+        list.add("6");
+        list.add(")");
+        list.add("-");
+        list.add("3");
+        list.add("*");
+        list.add("4");
+        list.add("/");
+        list.add("3");
+        list.add("-");
+        list.add("2");
+        list.add("-");
+        list.add("2");
+        list.add("*");
+        list.add("1");
+        list.add("+");
+        list.add("(");
+        list.add("3");
+        list.add("-");
+        list.add("2");
+        list.add(")");
+        list.add("*");
+        list.add("3");
+        */
 
-        // System.out.println("result = " + deleteDecimal(Float.parseFloat(getResult(list))));
-        getResult(list);
-        //divisionAndMult((ArrayList<String>) list, result);
-        //additionAndSubt((ArrayList<String>) list, result);
-        // List<String> list = new ArrayList<String>(Arrays.stream(args).toList());
-
-        // System.out.println(deleteDecimal(result));
+        System.out.println("result = " + deleteDecimal(Float.parseFloat(getResult(list))));
     }
 
     public static String getResult(List<String> list) {
         System.out.println("Aufruf mit folgendem Ausdruck:");
-        for (String s : list) {
-            System.out.print(s + " ");
-        }
+        list.forEach(System.out::print);
         System.out.println();
 
         // Prüfen, ob Ausdruck noch Klammern enthält
@@ -73,17 +97,10 @@ public class AdvancedCalculatorNEW {
                         } else if (list.get(j).equals(")")) {
                             numClosingBrackets++;
                             if (numOpenBrackets == numClosingBrackets) {
-                                // Hier ersetzen
-                                List<String> subList = new ArrayList<String>();
-                                subList = list.subList(i + 1, j);
-                                getResult(subList);
-                                //list.set(0, tmp);
-                                System.out.println("--------------------------------");
-                                for (String a: list) System.out.println(a);
-                                System.out.println("--------------------------------");
-                                System.out.println(i);
-                                System.out.println(j);
-                                //list.subList(i, j - 1).clear();
+                                list.set(i , getResult(createSublist(list, i + 1, j - 1)));
+                                list.subList(i + 1, j + 1).clear();
+                                numOpenBrackets = 0;
+                                numClosingBrackets = 0;
                                 break;
                             }
                         }
@@ -94,9 +111,7 @@ public class AdvancedCalculatorNEW {
                     }
                 }
             }
-
-
-        } else {
+        }
             // 1. Schritt: alle Ausdrücke multiplizieren oder dividieren
             for (int i = 0; i < list.size(); i++) {
                 if (isMultOrDivOperator(list.get(i))) {
@@ -113,9 +128,6 @@ public class AdvancedCalculatorNEW {
                     i--;
                 }
             }
-        }
-
-
         if (list.size() == 1) return list.get(0);
         return "0";
     }
@@ -204,39 +216,30 @@ public class AdvancedCalculatorNEW {
         }
     }
 
-    public static boolean isNumeric(String s) {
-        if (s == null) {
-            return false;
-        }
-        try {
-            double d = Double.parseDouble(s);
-        } catch (NumberFormatException nfe) {
-            return false;
-        }
-        return true;
-    }
-
+    // Funktion prüft, ob String ein Rechenoperator ist
     public static boolean isOperator(String s) {
-        if (s.equals("+") || s.equals("-") || s.equals("*") || s.equals("/")) {
-            return true;
-        } else {
-            return false;
-        }
+        return s.equals("+") || s.equals("-") || s.equals("*") || s.equals("/");
     }
 
+    // Funktion prüft, ob Operator "+" oder "-" ist
     public static boolean isAddOrSubOperator(String s) {
-        if (s.equals("+") || s.equals("-")) {
-            return true;
-        } else {
-            return false;
-        }
+        return s.equals("+") || s.equals("-");
     }
 
+    // Funktion prüft, ob Operator "*" oder "/" ist
     public static boolean isMultOrDivOperator(String s) {
-        if (s.equals("*") || s.equals("/")) {
-            return true;
-        } else {
-            return false;
+        return s.equals("*") || s.equals("/");
+    }
+
+    // Funktion zum Erstellen einer Sublist, kopiert einen Teil von startIndex bis endIndex in eine neue Liste und gibt diese zurück
+    public static List<String> createSublist(List<String> inList, int startIndex, int endIndex) {
+        List<String> returnList = new ArrayList<String>();
+        returnList.addAll(inList);
+        for (int i = returnList.size() - 1; i >= 0; i--) {
+            if (i > endIndex || i < startIndex) {
+                returnList.remove(i);
+            }
         }
+        return returnList;
     }
 }
