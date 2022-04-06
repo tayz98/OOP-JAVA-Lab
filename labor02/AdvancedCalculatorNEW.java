@@ -110,7 +110,7 @@ public class AdvancedCalculatorNEW {
                 if (isOperator(list.get(i))) {
                     if (list.get(i).equals("*")) result = Float.parseFloat(list.get(i - 1)) * Float.parseFloat(list.get(i + 1));
                     if (list.get(i).equals("/")) {
-                        if(list.get(i+1).equals("0")) {     // Falls durch 0 geteilt wird, soll eine Fehlermeldung ausgegeben werden.
+                        if (list.get(i + 1).equals("0") || list.get(i + 1).equals("0.0")) {     // Falls durch 0 geteilt wird, soll eine Fehlermeldung ausgegeben werden.
                             System.out.println("Dividing by 0 is not allowed. Program ends here with exit code 42..");
                             System.exit(42);
                         }
@@ -150,35 +150,46 @@ public class AdvancedCalculatorNEW {
 
         // Leere Liste zur Rückgabe im Fehlerfall
         ArrayList<String> errorList = new ArrayList<>();
-
         int dotCount = 0;
 
         for (int i = 0; i < str.length(); i++) {
             char c = str.charAt(i);
-            if (isOperator(Character.toString(c)) || c == '(' || c == ')') {
-
+            boolean sign = false; // boolean zum Überprüfen, um es sich bei einem Minus um ein Vorzeichen oder ein Operator handelt
+            if (c == '+' || c == '*' || c == '/' || c == '(' || c == ')') {
                 list.add(Character.toString(c));
+            } else if (c == '-') {
+                if (i == 0 || isOperator(Character.toString(str.charAt(i - 1)))) {
+                    sign = true;
+                } else {
+                    list.add(Character.toString(c));
+                }
             } else if (Character.isDigit(c) || c == '.') {
                 if (c == '.') dotCount++;
-                String number = Character.toString(c);
-                while (i + 1 < str.length() && (Character.isDigit(str.charAt(i + 1)) || str.charAt(i + 1) == '.')) {
-                    if (str.charAt(i + 1) == '.') dotCount++;
-                    if (dotCount > 1) {
-                        System.out.println("Error: Too many dots! Program ends here...");
-                        return errorList;
+                    String number = "";
+                    if (sign) {
+                        number = ("-" + c);
+                        sign = false;
+                    } else {
+                        number = Character.toString(c);
                     }
-                    number += Character.toString(str.charAt(i + 1));
-                    i++; // Manuelles Erhöhen von i, da die nächsten Zeichen mit zur Nummer gehören und in der for-Schleife übersprungen werden müssen
+                    while (i + 1 < str.length() && (Character.isDigit(str.charAt(i + 1)) || str.charAt(i + 1) == '.')) {
+                        if (str.charAt(i + 1) == '.') dotCount++;
+                        if (dotCount > 1) {
+                            System.out.println("Error: Too many dots! Program ends here...");
+                            return errorList;
+                        }
+                        number += Character.toString(str.charAt(i + 1));
+                        i++; // Manuelles Erhöhen von i, da die nächsten Zeichen mit zur Nummer gehören und in der for-Schleife übersprungen werden müssen
+                    }
+                    list.add(number);
+                    dotCount = 0;
+                } else {
+                    System.out.println("Error: Wrong input! Program ends here...");
+                    return errorList;
                 }
-                list.add(number);
-                dotCount = 0;
-            } else {
-                System.out.println("Error: Wrong input! Program ends here...");
-                return errorList;
             }
+            return list;
         }
-        return list;
-    }
 
     // Funktion zum Abschneiden, der Nachkommastelle, falls Ergebnis eine ganze Zahl ist
     public static String deleteDecimal(float in) {
