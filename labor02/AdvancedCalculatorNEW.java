@@ -109,7 +109,13 @@ public class AdvancedCalculatorNEW {
             for (int i = 0; i < list.size(); i++) {
                 if (isOperator(list.get(i))) {
                     if (list.get(i).equals("*")) result = Float.parseFloat(list.get(i - 1)) * Float.parseFloat(list.get(i + 1));
-                    if (list.get(i).equals("/")) result = Float.parseFloat(list.get(i - 1)) / Float.parseFloat(list.get(i + 1));
+                    if (list.get(i).equals("/")) {
+                        if(list.get(i+1).equals("0")) {     // Falls durch 0 geteilt wird, soll eine Fehlermeldung ausgegeben werden.
+                            System.out.println("Dividing by 0 is not allowed. Program ends here with exit code 42..");
+                            System.exit(42);
+                        }
+                        result = Float.parseFloat(list.get(i - 1)) / Float.parseFloat(list.get(i + 1));
+                    }
                 }
             }
             return result;
