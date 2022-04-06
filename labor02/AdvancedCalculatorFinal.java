@@ -153,17 +153,18 @@ public class AdvancedCalculatorFinal {
         ArrayList<String> list = new ArrayList<>();
 
         ArrayList<String> errorList = new ArrayList<>(); // Leere Liste zur Rückgabe im Fehlerfall
-        int dotCount = 0;
-        boolean sign = false;
+        int dotCount = 0; // Zum Zählen der Trennzeichen ('.') -> Fehler, falls mehrere in einer Zahl
+        boolean sign = false; // boolean zum Überprüfen, um es sich bei einem Minus um ein Vorzeichen oder ein Operator handelt
 
         for (int i = 0; i < str.length(); i++) {
             char c = str.charAt(i);
-             // boolean zum Überprüfen, um es sich bei einem Minus um ein Vorzeichen oder ein Operator handelt
             if (c == '+' || c == '*' || c == '/' || c == '(' || c == ')') {
                 list.add(Character.toString(c));
             } else if (c == '-') {
+                // Wenn es sich um ein Vorzeichen-Minus handelt, wird "sign" auf "true" gesetzt und die nächste Zahl mit dem Minus eingelesen
                 if (i == 0 || isOperator(Character.toString(str.charAt(i - 1)))) {
                     sign = true;
+                // Ansonsten ist es ein Minuszeichen zum Rechnen
                 } else {
                     list.add(Character.toString(c));
                 }
@@ -171,7 +172,7 @@ public class AdvancedCalculatorFinal {
                 if (c == '.') dotCount++;
                     String number = "";
                     if (sign) {
-                        number = "-" + c;
+                        number = "-" + c; // Hinzufügen des Vorzeichen-Minus
                         sign = false;
                     } else {
                         number = Character.toString(c);
@@ -188,7 +189,7 @@ public class AdvancedCalculatorFinal {
                     list.add(number);
                     dotCount = 0;
                 } else {
-                    System.out.println("Error: Wrong input! Program ends here...");
+                    System.out.println("Error: Wrong input! Program ends here..."); // Bei allen falschen Zeichen, die eingegegeben wurden
                     return errorList;
                 }
             }
