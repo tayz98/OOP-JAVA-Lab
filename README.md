@@ -1,4 +1,5 @@
-# OOP_Labor FH Kiel 🎓
+# OOP/Java Lab.
+# University of Applied Sciences: Fachhochschule Kiel 🎓
 
 All coding tasks from the OOP Lab will be documented in this repository. 
 
