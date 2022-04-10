@@ -21,11 +21,13 @@ public class ZombieGame {
 
     public static void main(String[] args) throws Exception {
 
-        Settings sett = new Settings();
+        // Am Anfang wird eine Willkommensnachricht ausgegeben, die dem Spieler erklärt, wie das Spiel funktioniert
+        printWelcomeMessage();
+        Settings settings = new Settings(); // Konstruktor für das Settings-Objekt: hier werden gleichzeitig noch die Settings abgefragt und gesetzt -> siehe Klasse "Settings"
         Scanner sc = new Scanner(System.in);
         String input; // Variable zum Verarbeiten der User-Eingabe
         int pickedRemedies = 0; // Variable zum tracken, wie viele Heilmittel aufgenommen wurden
-        int steps = 0;
+        int steps = 0; // variable für das Tracken von gemachten Schritten
         boolean isValid; // Variabel zum Überprüfen, ob zugelassene Zeichen zum Bewegen etc. eingegeben wurden
         boolean hasRemedy = false; // Variable zum Überprüfen, ob das Heilmittel eingesammelt wurde
         boolean hasWon = false; // Variable zum Überprüfen, ob gewonnen wurde
@@ -40,19 +42,22 @@ public class ZombieGame {
         Point exit = new Point(2, 2);
         objects.add(exit);
 
-        for (int i = 0; i < sett.numZombies; i++) {
-            Point tmp = new Point();
+        // Initialisierung der Zombies und Festlegung der Fixed Spawns
+        for (int i = 0; i < settings.numZombies; i++) {
+            Point tmp = new Point(i + 20, i + 1);
             objects.add(tmp);
             zombies.add(tmp);
         }
 
-        for (int i = 0; i < sett.numRemedies; i++) {
-            Point tmp = new Point();
+        // Initialisierung der Heilmittel und Festlegung der Fixed Spawns
+        for (int i = 0; i < settings.numRemedies; i++) {
+            Point tmp = new Point((i + 1)* 2, i * 2);
             objects.add(tmp);
             remedies.add(tmp);
         }
 
-        if (sett.hasPortals) {
+        // Initialisierung der Portale (werden immer random platziert)
+        if (settings.hasPortals) {
             for (int i = 0; i < 2; i++) {
                 Point tmp = new Point();
                 portals.add(tmp);
@@ -75,9 +80,10 @@ public class ZombieGame {
             }
         }
 
+        // Schleife, solange das Spiel nicht gewonnen oder verloren wurde
         do {
-            drawBoard(BOARD_WIDTH, BOARD_HEIGHT, survivor, zombies, exit, remedies, portals, sett);
-            // Hier wird geprüft, ob ein zugelassenes Zeichen eingegeben wurde -> falls nicht, nso lange wiederholen, bis was zugelassenes eingegeben wurde
+            drawBoard(BOARD_WIDTH, BOARD_HEIGHT, survivor, zombies, exit, remedies, portals, settings);
+            // Hier wird geprüft, ob ein zugelassenes Zeichen eingegeben wurde -> falls nicht, nso lange wiederholen, bis etwas Zugelassenes eingegeben wurde
             do {
                 System.out.println("What is your next move? [w = move up | a = move left | s = move down | d = move right | q = exit | Confirm input with ENTER]");
                 input = sc.nextLine();
@@ -92,9 +98,13 @@ public class ZombieGame {
                 }
             }
 
-            if (sett.hasPortals) {
-                if (survivor.getLocation().equals(portals.get(0).getLocation()) || survivor.getLocation().equals(portals.get(1).getLocation())) {
-                    usePortal(survivor, portals);
+            // Falls Portale aktiviert wurden:
+            if (settings.hasPortals) {
+                // Falls die Position des Spielers der Position eines Portales entspricht, wird der Spieler zu der Position des anderen Portals teleportiert.
+                if (survivor.getLocation().equals(portals.get(0).getLocation()))  {
+                    survivor.setLocation(portals.get(1));
+                } else if (survivor.getLocation().equals(portals.get(1).getLocation())) {
+                    survivor.setLocation(portals.get(0));
                 }
             }
 
@@ -105,10 +115,10 @@ public class ZombieGame {
 
             if (survivor.getLocation().equals(exit.getLocation()) && hasRemedy) { // Gewinnbedingung
                 hasWon = true;
-                drawBoard(BOARD_WIDTH, BOARD_HEIGHT, survivor, zombies, exit, remedies, portals, sett);
+                drawBoard(BOARD_WIDTH, BOARD_HEIGHT, survivor, zombies, exit, remedies, portals, settings);
                 printWinMessage();
             } else if (ateByZombies(survivor, zombies)) { // Verlieren-Bedingung
-                drawBoard(BOARD_WIDTH, BOARD_HEIGHT, survivor, zombies, exit, remedies, portals, sett);
+                drawBoard(BOARD_WIDTH, BOARD_HEIGHT, survivor, zombies, exit, remedies, portals, settings);
                 printLoseMessage();
                 System.exit(42);
             } else if (survivor.getLocation().equals(exit.getLocation()) && !hasRemedy) { // Ausgabe, falls Ausgang erreicht wird aber das Heilmittel nicht eingesammelt wurde
@@ -123,15 +133,21 @@ public class ZombieGame {
         String sign = "-";
         for (int i = 0; i < yAxis; i++) {
             for (int j = 0; j < xAxis; j++) {
+                // hier wird geprüft, ob ein Objekt auf der aktuellen Position aus i und j liegt. Dabei wird ebenfalls überprüft, ob ein "höherwertiges" Objekt danach kommt
+                // Beispiel: Zombie wird statt des Spielers angezeigt, da er ihne gefessen hat
+                // Beispiel: Spieler wird über Portal angezeigt
                 sign = "-";
+                // falls der Ausgang auf der aktuellen Position liegt
                 if (j == exit.getX() && i == exit.getY()) {
                     sign = "#";
                 }
+                // falls ein Heilmittel auf der aktuellen Position liegt
                 for (Point r : remedies) {
                     if (r.getX() == j && r.getY() == i) {
                         sign = "\u2695";
                     }
                 }
+                // falls ein Portal auf der aktuellen Position liegt
                 if (settings.hasPortals) {
                     for (Point p : portals) {
                         if (p.getX() == j && p.getY() == i) {
@@ -139,9 +155,11 @@ public class ZombieGame {
                         }
                     }
                 }
+                // falls der Spieler auf der aktuellen Position liegt
                 if (j == survivor.getX() && i == survivor.getY()) {
                     sign = "S";
                 }
+                // falls ein Zombie auf der aktuellen Position liegt
                 for (Point z : zombies) {
                     if (z.getX() == j && z.getY() == i) {
                         sign = "Z";
@@ -205,6 +223,23 @@ public class ZombieGame {
         System.out.println("***********************************");
     }
 
+    // Methode zur Ausgabe einer Willkommen-Nachricht
+    public static void printWelcomeMessage() {
+        PrintStream printStream = new PrintStream(System.out, true, StandardCharsets.UTF_8); // wird benötigt, um medizinisches Zeichen anzuzeigen
+        System.out.println("***********************************");
+        System.out.println("*                                 *");
+        System.out.println("*       WELCOME IN ZOMBIELAND     *");
+        System.out.println("*          TRY TO SURVIVE         *");
+        System.out.println("*                                 *");
+        System.out.println("*     [S] = Survivor              *");
+        System.out.println("*     [Z] = Zombie                *");
+        System.out.println("*     [#] = Exit                  *");
+        printStream.println("*     [" + "\u2695" + "] = Remedy                *");
+        System.out.println("*     [o] = Portal                *");
+        System.out.println("*                                 *");
+        System.out.println("***********************************");
+    }
+
     // Methode zur Ausgabe einer Verlierer-Nachricht
     public static void printLoseMessage () {
         System.out.println("***********************************");
@@ -246,19 +281,5 @@ public class ZombieGame {
         }
         return false;
     }
-
-    // Methode zum Benutzen eines Portals -> der Spieler wird beim Benutzen an die Location des anderen Portals gesetzt
-    public static void usePortal(final Point survivor, final List<Point> portals) throws Exception {
-        try {
-            if (survivor.getLocation().equals(portals.get(0).getLocation())) {
-                survivor.setLocation(portals.get(1));
-            } else if (survivor.getLocation().equals(portals.get(1).getLocation())) {
-                survivor.setLocation(portals.get(0));
-            }
-        } catch (Exception e) {
-            System.err.println("Something went wrong!");
-        }
-    }
-
 }
 

@@ -104,10 +104,11 @@ public class Settings {
                     if (!isValid) {
                         System.out.println("Wrong input! Go again!");
                     }
-                    System.out.println("Should the zombies sleep for certain turns? (0-5 Turns)");
+                    // Einstellung für den Zombie-Sleep-Modus
+                    System.out.println("Should the zombies sleep for certain turns? (0-10 Turns)");
                     inputInt = sc.nextInt();
                     sc.nextLine();
-                    isValid = (inputInt >= 0 && inputInt <= 5);
+                    isValid = (inputInt >= 0 && inputInt <= 10);
                     if (isValid && inputInt > 0) {
                         this.zombieSleep = inputInt;
                         this.hasSleepMode = true;
@@ -115,7 +116,8 @@ public class Settings {
                 } while (!isValid); // while-Schleife bis zur Eingabe eines richtigen Wertes
             }
         } catch (Exception e) {
-            System.err.println("Something went wrong!");
+            System.err.println("Wrong input, program ends here!");
+            System.exit(2);
         }
     }
 }
