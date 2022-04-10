@@ -44,6 +44,7 @@ public class Settings {
 
             // Falls Customsettings ausgewählt wurden, geht er die kommenden Settings-Abfragen durch
             if (this.hasCustomSettings) {
+                // Abfrage zu Spawns
                 do {
                     if (!isValid) {
                         System.out.println("Wrong input! Go again!");
@@ -72,6 +73,7 @@ public class Settings {
                     }
                 } while (!isValid);
 
+                // Abfrage zu Zombies
                 do {
                     if (!isValid) {
                         System.out.println("Wrong input! Go again!");
@@ -85,6 +87,7 @@ public class Settings {
                     }
                 } while (!isValid);
 
+                // Abfrage zu Portalen
                 do {
                     if (!isValid) {
                         System.out.println("Wrong input! Go again!");
@@ -113,7 +116,7 @@ public class Settings {
                         this.zombieSleep = inputInt;
                         this.hasSleepMode = true;
                     }
-                } while (!isValid); // while-Schleife bis zur Eingabe eines richtigen Wertes
+                } while (!isValid);
             }
         } catch (Exception e) {
             System.err.println("Wrong input, program ends here!");
