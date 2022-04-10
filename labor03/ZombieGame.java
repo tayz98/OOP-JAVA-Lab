@@ -19,64 +19,46 @@ public class ZombieGame {
     public static final int BOARD_HEIGHT = 12;
     public static final int BOARD_WIDTH = 36;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
+        Settings sett = new Settings();
         Scanner sc = new Scanner(System.in);
-        int settings;
-        int numRemedies = 1;
-        int numZombies = 1;
-
-        // Abfrage wie gespielt werden soll: Festgelegt oder zufällige Spawns
-        do {
-            System.out.println("How do you wanna play?");
-            System.out.println("[1] Fixed spawns");
-            System.out.println("[2] Random spawns");
-            System.out.println("[3] Random spawns and custom settings");
-            settings = sc.nextInt();
-            sc.nextLine(); // muss benutzt werden, damit der Scanner das nächste Zeichen einliest
-        } while(settings != 1 && settings != 2 && settings != 3); // while-Schleife bis zur Eingabe eines richtigen Wertes
-
-        if (settings == 3) {
-            // Angabe über Anzahl Heilmittel
-            do {
-                if (numRemedies < 1 || numRemedies > 5) {
-                    System.out.println("Wrong input! Go again!");
-                }
-                System.out.println("How much remedies does the player need? (1-5)");
-                numRemedies = sc.nextInt();
-                sc.nextLine();
-            } while (numRemedies < 0 || numRemedies > 5); // while-Schleife bis zur Eingabe eines richtigen Wertes
-
-            // Angabe über Anzahl Zombies
-            do {
-                if (numZombies < 1 || numZombies > 10) {
-                    System.out.println("Wrong input! Go again!");
-                }
-                System.out.println("How much zombies do you want to escape? (1-10)");
-                numZombies = sc.nextInt();
-                sc.nextLine();
-            } while (numZombies < 0 || numZombies > 10 ); // while-Schleife bis zur Eingabe eines richtigen Wertes
-        }
+        String input; // Variable zum Verarbeiten der User-Eingabe
+        int pickedRemedies = 0; // Variable zum tracken, wie viele Heilmittel aufgenommen wurden
+        int steps = 0;
+        boolean isValid; // Variabel zum Überprüfen, ob zugelassene Zeichen zum Bewegen etc. eingegeben wurden
+        boolean hasRemedy = false; // Variable zum Überprüfen, ob das Heilmittel eingesammelt wurde
+        boolean hasWon = false; // Variable zum Überprüfen, ob gewonnen wurde
 
         List<Point> objects = new ArrayList<>(); // Liste mit allen Objekten
         List<Point> zombies = new ArrayList<>(); // Liste mit Zombies
         List<Point> remedies = new ArrayList<>(); // Liste mit Heilmitteln
+        List<Point> portals = new ArrayList<>(); // Liste mit Portalen
 
         Point survivor = new Point(5, 5);
         objects.add(survivor);
         Point exit = new Point(2, 2);
         objects.add(exit);
 
-        for (int i = 0; i < numZombies; i++) {
+        for (int i = 0; i < sett.numZombies; i++) {
             Point tmp = new Point();
             objects.add(tmp);
             zombies.add(tmp);
         }
 
-        for (int i = 0; i < numRemedies; i++) {
+        for (int i = 0; i < sett.numRemedies; i++) {
             Point tmp = new Point();
             objects.add(tmp);
             remedies.add(tmp);
+        }
+
+        if (sett.hasPortals) {
+            for (int i = 0; i < 2; i++) {
+                Point tmp = new Point();
+                portals.add(tmp);
+                objects.add(tmp);
+                setRandomLocation(tmp, objects);
+            }
         }
 
         // Setzen von zufälligen Spawns
@@ -93,26 +75,26 @@ public class ZombieGame {
             }
         }
 
-        boolean hasRemedy = false; // Variable zum Überprüfen, ob das Heilmittel eingesammelt wurde
-        boolean hasWon = false; // Variable zum Überprüfen, ob gewonnen wurde
-        boolean validInput; // Variabel zum Überprüfen, ob zugelassene Zeichen zum Bewegen etc. eingegeben wurden
-        String input; // Variable zum Verarbeiten der User-Eingabe
-        int pickedRemedies = 0; // Variable zum tracken, wieviele Heilmittel aufgenommen wurden
-
         do {
-            drawBoardNEW(BOARD_WIDTH, BOARD_HEIGHT, survivor, zombies, exit, remedies);
+            drawBoard(BOARD_WIDTH, BOARD_HEIGHT, survivor, zombies, exit, remedies, portals, sett);
             // Hier wird geprüft, ob ein zugelassenes Zeichen eingegeben wurde -> falls nicht, nso lange wiederholen, bis was zugelassenes eingegeben wurde
             do {
                 System.out.println("What is your next move? [w = move up | a = move left | s = move down | d = move right | q = exit | Confirm input with ENTER]");
                 input = sc.nextLine();
-                validInput = move(survivor, input);
-            } while(!validInput);
+                isValid = move(survivor, input);
+            } while (!isValid);
 
             // falls das Heilmittel eingesammelt wird, "pickedRemedies" erhöhz
             for (Point r: remedies) {
                 if (r.getLocation().equals(survivor.getLocation())) {
                     pickedRemedies++;
                     r.setLocation(-1, -1);
+                }
+            }
+
+            if (sett.hasPortals) {
+                if (survivor.getLocation().equals(portals.get(0).getLocation()) || survivor.getLocation().equals(portals.get(1).getLocation())) {
+                    usePortal(survivor, portals);
                 }
             }
 
@@ -123,10 +105,10 @@ public class ZombieGame {
 
             if (survivor.getLocation().equals(exit.getLocation()) && hasRemedy) { // Gewinnbedingung
                 hasWon = true;
-                drawBoardNEW(BOARD_WIDTH, BOARD_HEIGHT, survivor, zombies, exit, remedies);
+                drawBoard(BOARD_WIDTH, BOARD_HEIGHT, survivor, zombies, exit, remedies, portals, sett);
                 printWinMessage();
             } else if (ateByZombies(survivor, zombies)) { // Verlieren-Bedingung
-                drawBoardNEW(BOARD_WIDTH, BOARD_HEIGHT, survivor, zombies, exit, remedies);
+                drawBoard(BOARD_WIDTH, BOARD_HEIGHT, survivor, zombies, exit, remedies, portals, sett);
                 printLoseMessage();
                 System.exit(42);
             } else if (survivor.getLocation().equals(exit.getLocation()) && !hasRemedy) { // Ausgabe, falls Ausgang erreicht wird aber das Heilmittel nicht eingesammelt wurde
@@ -136,7 +118,7 @@ public class ZombieGame {
     }
 
     // Methode zum Zeichnen des Spielbretts auf der Konsole
-    public static void drawBoardNEW (int xAxis, int yAxis, Point survivor, List<Point> zombies, Point exit, List<Point> remedies) {
+    public static void drawBoard(final int xAxis, final int yAxis, final Point survivor, final List<Point> zombies, final Point exit, final List<Point> remedies, final List<Point> portals, final Settings settings) {
         PrintStream printStream = new PrintStream(System.out, true, StandardCharsets.UTF_8); // wird benötigt, um medizinisches Zeichen anzuzeigen
         String sign = "-";
         for (int i = 0; i < yAxis; i++) {
@@ -150,6 +132,13 @@ public class ZombieGame {
                         sign = "\u2695";
                     }
                 }
+                if (settings.hasPortals) {
+                    for (Point p : portals) {
+                        if (p.getX() == j && p.getY() == i) {
+                            sign = "o";
+                        }
+                    }
+                }
                 if (j == survivor.getX() && i == survivor.getY()) {
                     sign = "S";
                 }
@@ -159,28 +148,6 @@ public class ZombieGame {
                     }
                 }
                 printStream.print(sign);
-            }
-            System.out.println();
-        }
-    }
-
-    // Methode zum Zeichnen des Spielbretts auf der Konsole
-    // ALT
-    public static void drawBoard (int xAxis, int yAxis, Point survivor, Point zombie, Point exit, Point remedy, boolean hasRemedy){
-        PrintStream printStream = new PrintStream(System.out, true, StandardCharsets.UTF_8); // wird benötigt, um medizinisches Zeichen anzuzeigen
-        for (int i = 0; i < yAxis; i++) {
-            for (int j = 0; j < xAxis; j++) {
-                if (j == zombie.getX() && i == zombie.getY()) {
-                    System.out.print("Z");
-                } else if (j == survivor.getX() && i == survivor.getY()) {
-                    System.out.print("S");
-                } else if (j == exit.getX() && i == exit.getY()) {
-                    System.out.print("#");
-                } else if (j == remedy.getX() && i == remedy.getY() && !hasRemedy) { // Heilmittel wird über "hasRemedy" nur angezeigt, solange es nicht eingesammelt wurde
-                    printStream.print("\u2695");
-                } else {
-                    System.out.print("-");
-                }
             }
             System.out.println();
         }
@@ -266,13 +233,32 @@ public class ZombieGame {
         } while (!isValid);
     }
 
-    public static boolean ateByZombies(Point survivor, List<Point> zombies) {
-        for (Point z: zombies) {
-            if (z.getLocation().equals(survivor.getLocation())) {
-                return true;
+    // Methode, die überprüft, ob man vom Zombie erwischt wurde
+    public static boolean ateByZombies(final Point survivor, final List<Point> zombies) throws Exception {
+        try {
+            for (Point z : zombies) {
+                if (z.getLocation().equals(survivor.getLocation())) {
+                    return true;
+                }
             }
+        } catch (Exception e) {
+            System.err.println("Something went wrong!");
         }
         return false;
     }
+
+    // Methode zum Benutzen eines Portals -> der Spieler wird beim Benutzen an die Location des anderen Portals gesetzt
+    public static void usePortal(final Point survivor, final List<Point> portals) throws Exception {
+        try {
+            if (survivor.getLocation().equals(portals.get(0).getLocation())) {
+                survivor.setLocation(portals.get(1));
+            } else if (survivor.getLocation().equals(portals.get(1).getLocation())) {
+                survivor.setLocation(portals.get(0));
+            }
+        } catch (Exception e) {
+            System.err.println("Something went wrong!");
+        }
+    }
+
 }
 

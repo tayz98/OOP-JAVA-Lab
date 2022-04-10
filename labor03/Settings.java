@@ -1,0 +1,122 @@
+package labor03;
+
+import java.util.Scanner;
+
+// In dieser Datei werden die Einstellung (settings) für das Spiel angepasst.
+
+// Hier werden die Einstellungen definiert.
+public class Settings {
+    public int numRemedies;
+    public int numZombies;
+    public int zombieSleep = 0;
+    public boolean hasCustomSettings;
+    public boolean hasPortals;
+    public boolean hasRandomSpawns;
+    public boolean hasSleepMode;
+
+    // Konstruktor + fragt den Benutzer zusätzlich nach den Einstellungen.
+    public Settings() {
+        Scanner sc = new Scanner(System.in);
+        boolean isValid = true;
+        int inputInt;
+        this.hasCustomSettings = true;
+        try {
+            do {
+                if (!isValid) {
+                    System.out.println("Wrong input! Go again!");
+                }
+                System.out.println("How do you wanna play?");
+                System.out.println("[1] easy-peasy-lemons-squeezy mode");
+                System.out.println("[2] Custom mode");
+                inputInt = sc.nextInt();
+                sc.nextLine();
+                isValid = (inputInt == 1 || inputInt == 2);
+                //  Falls der User "1" in die Konsole eingibt, werden folgende Einstellungen für den easy Mode eingestellt
+                if (isValid && inputInt == 1) {
+                    this.hasRandomSpawns = false;
+                    this.numRemedies = 1;
+                    this.numZombies = 1;
+                    this.zombieSleep = 0;
+                    this.hasPortals = false;
+                    this.hasCustomSettings = false;
+                }
+            } while (!isValid); // while-Schleife bis zur Eingabe eines richtigen Wertes
+
+            // Falls Customsettings ausgewählt wurden, geht er die kommenden Settings-Abfragen durch
+            if (this.hasCustomSettings) {
+                do {
+                    if (!isValid) {
+                        System.out.println("Wrong input! Go again!");
+                    }
+                    System.out.println("How do you wanna play?");
+                    System.out.println("[1] Fixed spawns");
+                    System.out.println("[2] Random spawns");
+                    inputInt = sc.nextInt();
+                    sc.nextLine();
+                    isValid = (inputInt == 1 || inputInt == 2);
+                    if (isValid && inputInt == 2) {
+                        this.hasRandomSpawns = true;
+                    }
+                } while (!isValid); // while-Schleife bis zur Eingabe eines richtigen Wertes
+
+                do {
+                    if (!isValid) {
+                        System.out.println("Wrong input! Go again!");
+                    }
+                    System.out.println("How many remedies does the player need? (1-5)");
+                    inputInt = sc.nextInt();
+                    sc.nextLine();
+                    isValid = (inputInt > 0 && inputInt <= 5);
+                    if (isValid) {
+                        this.numRemedies = inputInt;
+                    }
+                } while (!isValid);
+
+                do {
+                    if (!isValid) {
+                        System.out.println("Wrong input! Go again!");
+                    }
+                    System.out.println("How many zombies do you want to escape? (1-10)");
+                    inputInt = sc.nextInt();
+                    sc.nextLine();
+                    isValid = (inputInt > 0 && inputInt <= 10);
+                    if (isValid) {
+                        this.numZombies = inputInt;
+                    }
+                } while (!isValid);
+
+                do {
+                    if (!isValid) {
+                        System.out.println("Wrong input! Go again!");
+                    }
+                    System.out.println("Do you want to enable portals?");
+                    System.out.println("[1] No portals");
+                    System.out.println("[2] portals");
+                    inputInt = sc.nextInt();
+                    sc.nextLine();
+                    isValid = (inputInt == 1 || inputInt == 2);
+                    if (isValid && inputInt == 2) {
+                        this.hasPortals = true;
+                    }
+                } while (!isValid); // while-Schleife bis zur Eingabe eines richtigen Wertes
+
+                do {
+                    if (!isValid) {
+                        System.out.println("Wrong input! Go again!");
+                    }
+                    System.out.println("Should the zombies sleep for certain turns? (0-5 Turns)");
+                    inputInt = sc.nextInt();
+                    sc.nextLine();
+                    isValid = (inputInt >= 0 && inputInt <= 5);
+                    if (isValid && inputInt > 0) {
+                        this.zombieSleep = inputInt;
+                        this.hasSleepMode = true;
+                    }
+                } while (!isValid); // while-Schleife bis zur Eingabe eines richtigen Wertes
+            }
+        } catch (Exception e) {
+            System.err.println("Something went wrong!");
+        }
+    }
+}
+
