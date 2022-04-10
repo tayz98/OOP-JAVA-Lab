@@ -2,9 +2,8 @@ package labor03;
 
 import java.util.Scanner;
 
-// In dieser Datei werden die Einstellung (settings) für das Spiel angepasst.
+// In dieser Klasse werden die Einstellung (settings) für das Spiel angepasst.
 
-// Hier werden die Einstellungen definiert.
 public class Settings {
     public int numRemedies;
     public int numZombies;
@@ -22,6 +21,7 @@ public class Settings {
         this.hasCustomSettings = true;
         try {
             do {
+                // bei einer falschen Eingabe wird folgende Meldung ausgegeben:
                 if (!isValid) {
                     System.out.println("Wrong input! Go again!");
                 }
@@ -31,7 +31,7 @@ public class Settings {
                 inputInt = sc.nextInt();
                 sc.nextLine();
                 isValid = (inputInt == 1 || inputInt == 2);
-                //  Falls der User "1" in die Konsole eingibt, werden folgende Einstellungen für den easy Mode eingestellt
+                //  Falls der User "1" in die Konsole eingibt, werden folgende Einstellungen für den easy Mode angepasst.
                 if (isValid && inputInt == 1) {
                     this.hasRandomSpawns = false;
                     this.numRemedies = 1;
@@ -42,7 +42,7 @@ public class Settings {
                 }
             } while (!isValid); // while-Schleife bis zur Eingabe eines richtigen Wertes
 
-            // Falls Customsettings ausgewählt wurden, geht er die kommenden Settings-Abfragen durch
+            // Falls "[2] Custom mode" ausgewählt wurde, geht er die kommenden Settings-Abfragen durch
             if (this.hasCustomSettings) {
                 // Abfrage zu Spawns
                 do {
@@ -54,12 +54,14 @@ public class Settings {
                     System.out.println("[2] Random spawns");
                     inputInt = sc.nextInt();
                     sc.nextLine();
+                    // Einstellung für Spawns.
                     isValid = (inputInt == 1 || inputInt == 2);
                     if (isValid && inputInt == 2) {
                         this.hasRandomSpawns = true;
                     }
-                } while (!isValid); // while-Schleife bis zur Eingabe eines richtigen Wertes
+                } while (!isValid);
 
+                // Abfrage zu Heilmitteln
                 do {
                     if (!isValid) {
                         System.out.println("Wrong input! Go again!");
@@ -67,6 +69,7 @@ public class Settings {
                     System.out.println("How many remedies does the player need? (1-5)");
                     inputInt = sc.nextInt();
                     sc.nextLine();
+                    // Einstellung für Remedies
                     isValid = (inputInt > 0 && inputInt <= 5);
                     if (isValid) {
                         this.numRemedies = inputInt;
@@ -81,6 +84,7 @@ public class Settings {
                     System.out.println("How many zombies do you want to escape? (1-10)");
                     inputInt = sc.nextInt();
                     sc.nextLine();
+                    // Einstellung für Zombies
                     isValid = (inputInt > 0 && inputInt <= 10);
                     if (isValid) {
                         this.numZombies = inputInt;
@@ -97,12 +101,14 @@ public class Settings {
                     System.out.println("[2] portals");
                     inputInt = sc.nextInt();
                     sc.nextLine();
+                    // Einstellung für Portale
                     isValid = (inputInt == 1 || inputInt == 2);
                     if (isValid && inputInt == 2) {
                         this.hasPortals = true;
                     }
-                } while (!isValid); // while-Schleife bis zur Eingabe eines richtigen Wertes
+                } while (!isValid);
 
+                // Abfrage zum "Sleep-Modus"
                 do {
                     if (!isValid) {
                         System.out.println("Wrong input! Go again!");

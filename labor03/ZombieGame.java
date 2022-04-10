@@ -8,6 +8,7 @@
  */
 
 package labor03;
+
 import java.awt.Point;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
@@ -39,9 +40,10 @@ public class ZombieGame {
         List<Point> remedies = new ArrayList<>(); // Liste mit Heilmitteln
         List<Point> portals = new ArrayList<>(); // Liste mit Portalen
 
-        Point survivor = new Point(5, 5);
+        // Initialisierung des Survivors (Spieler) und des Ausgangs
+        Point survivor = new Point(5, 5); // Der Standort bzw. Punkt für den Spieler wird auf die angegebenen Koordinaten festgelegt
         objects.add(survivor);
-        Point exit = new Point(2, 2);
+        Point exit = new Point(2, 2); // Der Standort bzw. Punkt für den Ausgang wird auf die angegebenen Koordinaten festgelegt
         objects.add(exit);
 
         System.out.println(survivor.toString());
@@ -70,17 +72,10 @@ public class ZombieGame {
             }
         }
 
-        // Setzen von zufälligen Spawns
-        if (settings == 2 || settings == 3) {
-            for (Point p: objects) {
+        // Setzen von zufälligen Spawns, falls es in den Settings aktiviert wurde
+        if (settings.hasRandomSpawns) {
+            for (Point p : objects) {
                 setRandomLocation(p, objects);
-            }
-        } else {
-            for (Point z: zombies) {
-                z.setLocation(10, 10);
-            }
-            for (Point r: remedies) {
-                r.setLocation(3, 3);
             }
         }
 
@@ -94,8 +89,8 @@ public class ZombieGame {
                 isValid = move(survivor, input);
             } while (!isValid);
 
-            // falls das Heilmittel eingesammelt wird, "pickedRemedies" erhöhz
-            for (Point r: remedies) {
+            // falls das Heilmittel eingesammelt wird, wird "pickedRemedies" erhöht
+            for (Point r : remedies) {
                 if (r.getLocation().equals(survivor.getLocation())) {
                     pickedRemedies++;
                     r.setLocation(-1, -1);
@@ -112,20 +107,38 @@ public class ZombieGame {
                 }
             }
 
-            // falls alle Heilmittel eingesammelt wurden, wird "hasRemedy" auf "true" gesetzt
-            if (pickedRemedies == numRemedies) {hasRemedy = true;}
+            // Überprüfung, ob der Spieler, alle Heilmittel eingesammelt hat.
+            if (pickedRemedies == settings.numRemedies) {
+                hasRemedy = true;
+            }
 
-            moveZombies(survivor, zombies);
+            // Wenn der Sleep-Modus aktiviert wurde, wird der Zombie in einen "Schlafmodus" gesetzt, bis eine bestimmte Anzahl von Schritten erreicht wurde.
+            if (settings.hasSleepMode) {
+                if (steps < settings.zombieSleep) {
+                    steps++;
+                } else {
+                    moveZombies(survivor, zombies);
+                }
+                // ansonsten ist der Zombie direkt von Anfang an wach.
+            } else {
+                moveZombies(survivor, zombies);
+            }
 
-            if (survivor.getLocation().equals(exit.getLocation()) && hasRemedy) { // Gewinnbedingung
+            // Hier wird die Gewinnbedingung überprüft. Der Spieler muss alle Heilmittel eingesammelt haben UND sich in der Position des Ausgangs befinden.
+            if (survivor.getLocation().equals(exit.getLocation()) && hasRemedy) {
                 hasWon = true;
                 drawBoard(BOARD_WIDTH, BOARD_HEIGHT, survivor, zombies, exit, remedies, portals, settings);
                 printWinMessage();
+
+            // Hier wird die Verlier-Bedingung überprüft.
+            // Wenn die Position des Zombies der Position des Spielers entspricht, frisst der Zombie den Spieler auf und der Spieler hat verloren.
             } else if (ateByZombies(survivor, zombies)) { // Verlieren-Bedingung
                 drawBoard(BOARD_WIDTH, BOARD_HEIGHT, survivor, zombies, exit, remedies, portals, settings);
                 printLoseMessage();
                 System.exit(42);
-            } else if (survivor.getLocation().equals(exit.getLocation()) && !hasRemedy) { // Ausgabe, falls Ausgang erreicht wird aber das Heilmittel nicht eingesammelt wurde
+
+               // Falls der Spieler den Ausgang erreicht hat, aber noch nicht das Heilmittel eingesammelt hat, wird eine Meldung ausgegeben.
+            } else if (survivor.getLocation().equals(exit.getLocation()) && !hasRemedy) {
                 System.out.println("Oh no, there's something missing...");
             }
         } while (!input.equals("q") && !hasWon);
@@ -133,8 +146,8 @@ public class ZombieGame {
 
     // Methode zum Zeichnen des Spielbretts auf der Konsole
     public static void drawBoard(final int xAxis, final int yAxis, final Point survivor, final List<Point> zombies, final Point exit, final List<Point> remedies, final List<Point> portals, final Settings settings) {
-        PrintStream printStream = new PrintStream(System.out, true, StandardCharsets.UTF_8); // wird benötigt, um medizinisches Zeichen anzuzeigen
-        String sign = "-";
+        PrintStream printStream = new PrintStream(System.out, true, StandardCharsets.UTF_8); // Eine Print Methode wird benötigt, um den Unicode im UTF-8 Format anzuzeigen
+        String sign;
         for (int i = 0; i < yAxis; i++) {
             for (int j = 0; j < xAxis; j++) {
                 // hier wird geprüft, ob ein Objekt auf der aktuellen Position aus i und j liegt. Dabei wird ebenfalls überprüft, ob ein "höherwertiges" Objekt danach kommt
@@ -176,49 +189,57 @@ public class ZombieGame {
     }
 
     // Methode zum Bewegen des Spielers
-    public static boolean move (Point obj, String input){
-        switch (input) {
-            // Wenn der Survivor auf den Spielfeldrand trifft, bleibt er stehen (über Min- und Max-Methode!)
-            case "a" -> obj.setLocation(Math.max(obj.getX() - 1, 0), obj.getY());
-            case "s" -> obj.setLocation(obj.getX(), Math.min(obj.getY() + 1, BOARD_HEIGHT - 1));
-            case "d" -> obj.setLocation(Math.min(obj.getX() + 1, BOARD_WIDTH - 1), obj.getY());
-            case "w" -> obj.setLocation(obj.getX(), Math.max(obj.getY() - 1, 0));
-            case "q" -> System.out.println("Exit game...");
-            default -> {
-                System.out.println("Wrong input");
-                return false;
+    public static boolean move(final Point obj, final String input) throws Exception {
+        try {
+            switch (input) {
+                // Wenn der Survivor auf den Spielfeldrand trifft, bleibt er stehen (über Min- und Max-Methode!)
+                case "a" -> obj.setLocation(Math.max(obj.getX() - 1, 0), obj.getY());
+                case "s" -> obj.setLocation(obj.getX(), Math.min(obj.getY() + 1, BOARD_HEIGHT - 1));
+                case "d" -> obj.setLocation(Math.min(obj.getX() + 1, BOARD_WIDTH - 1), obj.getY());
+                case "w" -> obj.setLocation(obj.getX(), Math.max(obj.getY() - 1, 0));
+                case "q" -> System.out.println("Exit game...");
+                default -> {
+                    System.out.println("Wrong input");
+                    return false;
+                }
             }
+        } catch (Exception e) {
+            System.err.println("Something went wrong!");
         }
         return true;
     }
 
     // Methode zum Bewegen der Zombies
-    public static void moveZombies (Point survivor, List<Point> zombies) {
+    public static void moveZombies(final Point survivor, final List<Point> zombies) throws Exception {
         // Der Zombie bewegt sich immer in Richtung der x- und y-Koordinate des Spielers
         // da er diagonal gehen kann, werden beide Richtungen ausgewertet
-        for (Point z: zombies) {
-            int x = (int) z.getX();
-            int y = (int) z.getY();
+        try {
+            for (Point z : zombies) {
+                int x = (int) z.getX();
+                int y = (int) z.getY();
 
-            // Bewegung in x-Richtung
-            if (x < survivor.getX()) {
-                x++;
-            } else if (x > survivor.getX()) {
-                x--;
+                // Bewegung in x-Richtung
+                if (x < survivor.getX()) {
+                    x++;
+                } else if (x > survivor.getX()) {
+                    x--;
+                }
+                // Bewegung in y-Richtung
+                if (y < survivor.getY()) {
+                    y++;
+                } else if (y > survivor.getY()) {
+                    y--;
+                }
+                z.setLocation(x, y);
             }
-            // Bewegung in y-Richtung
-            if (y < survivor.getY()) {
-                y++;
-            } else if (y > survivor.getY()) {
-                y--;
-            }
-            z.setLocation(x, y);
+        } catch (Exception e) {
+            System.err.println("Something went wrong!");
         }
 
     }
 
     // Methode zur Ausgabe einer Gewinner-Nachricht
-    public static void printWinMessage () {
+    public static void printWinMessage() {
         System.out.println("***********************************");
         System.out.println("*                                 *");
         System.out.println("*       CONGRATS! YOU WON!        *");
@@ -245,7 +266,7 @@ public class ZombieGame {
     }
 
     // Methode zur Ausgabe einer Verlierer-Nachricht
-    public static void printLoseMessage () {
+    public static void printLoseMessage() {
         System.out.println("***********************************");
         System.out.println("*                                 *");
         System.out.println("*               OH NO!            *");
@@ -255,21 +276,25 @@ public class ZombieGame {
     }
 
     // Methode zum Setzen einer zufälligen Position, die noch nicht von einem anderen Objekt belegt ist
-    public static void setRandomLocation (Point obj, List < Point > objects){
+    public static void setRandomLocation(final Point obj, final List<Point> objects) throws Exception {
         int x, y;
-        Random rand = new Random();
-        boolean isValid = true;
-        do {
-            x = rand.nextInt(BOARD_WIDTH - 1);
-            y = rand.nextInt(BOARD_HEIGHT - 1);
-            obj.setLocation(x, y);
-            for (Point p : objects) {
-                if (p.equals(obj) && !(p == obj)) {
-                    isValid = false;
-                    break;
+        try {
+            Random rand = new Random();
+            boolean isValid = true;
+            do {
+                x = rand.nextInt(BOARD_WIDTH - 1);
+                y = rand.nextInt(BOARD_HEIGHT - 1);
+                obj.setLocation(x, y);
+                for (Point p : objects) {
+                    if (p.equals(obj) && !(p == obj)) {
+                        isValid = false;
+                        break;
+                    }
                 }
-            }
-        } while (!isValid);
+            } while (!isValid);
+        } catch (Exception e) {
+            System.err.println("Something went wrong! :)");
+        }
     }
 
     // Methode, die überprüft, ob man vom Zombie erwischt wurde
