@@ -7,6 +7,7 @@
  * @description Zombie Spiel: hier geht's ums nackte Überleben!
  */
 
+package labor03;
 import java.awt.Point;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
