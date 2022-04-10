@@ -15,7 +15,7 @@ import java.util.*;
 
 public class ZombieGame {
 
-    // für Ausführungshinweise bitte "README.txt" lesen!!
+    // für Ausführungshinweise bitte "README.txt" lesen!
 
     // hier werden Konstanten für die Spielfeldgröße definiert
     public static final int BOARD_HEIGHT = 12;
@@ -43,6 +43,8 @@ public class ZombieGame {
         objects.add(survivor);
         Point exit = new Point(2, 2);
         objects.add(exit);
+
+        System.out.println(survivor.toString());
 
         // Initialisierung der Zombies und Festlegung der Fixed Spawns
         for (int i = 0; i < settings.numZombies; i++) {
