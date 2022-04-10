@@ -15,6 +15,8 @@ import java.util.*;
 
 public class ZombieGame {
 
+    // für Ausführungshinweise bitte "README.txt" lesen!
+
     // hier werden Konstanten für die Spielfeldgröße definiert
     public static final int BOARD_HEIGHT = 12;
     public static final int BOARD_WIDTH = 36;
