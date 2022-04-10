@@ -81,11 +81,11 @@ public class Settings {
                     if (!isValid) {
                         System.out.println("Wrong input! Go again!");
                     }
-                    System.out.println("How many zombies do you want to escape? (1-10)");
+                    System.out.println("How many zombies do you want to escape? (1-5)");
                     inputInt = sc.nextInt();
                     sc.nextLine();
                     // Einstellung für Zombies
-                    isValid = (inputInt > 0 && inputInt <= 10);
+                    isValid = (inputInt > 0 && inputInt <= 5);
                     if (isValid) {
                         this.numZombies = inputInt;
                     }
@@ -114,10 +114,10 @@ public class Settings {
                         System.out.println("Wrong input! Go again!");
                     }
                     // Einstellung für den Zombie-Sleep-Modus
-                    System.out.println("Should the zombies sleep for certain turns? (0-10 Turns)");
+                    System.out.println("Should the zombies sleep for certain turns? (0-5 Turns)");
                     inputInt = sc.nextInt();
                     sc.nextLine();
-                    isValid = (inputInt >= 0 && inputInt <= 10);
+                    isValid = (inputInt >= 0 && inputInt <= 5);
                     if (isValid && inputInt > 0) {
                         this.zombieSleep = inputInt;
                         this.hasSleepMode = true;
