@@ -26,6 +26,7 @@ public class ZombieGame {
 
         // Am Anfang wird eine Willkommensnachricht ausgegeben, die dem Spieler erklärt, wie das Spiel funktioniert
         printWelcomeMessage();
+
         Settings settings = new Settings(); // Konstruktor für das Settings-Objekt: hier werden gleichzeitig noch die Settings abgefragt und gesetzt -> siehe Klasse "Settings"
         Scanner sc = new Scanner(System.in);
         String input; // Variable zum Verarbeiten der User-Eingabe
@@ -45,8 +46,6 @@ public class ZombieGame {
         objects.add(survivor);
         Point exit = new Point(2, 2); // Der Standort bzw. Punkt für den Ausgang wird auf die angegebenen Koordinaten festgelegt
         objects.add(exit);
-
-        System.out.println(survivor.toString());
 
         // Initialisierung der Zombies und Festlegung der Fixed Spawns
         for (int i = 0; i < settings.numZombies; i++) {
@@ -82,7 +81,7 @@ public class ZombieGame {
         // Schleife, solange das Spiel nicht gewonnen oder verloren wurde
         do {
             drawBoard(BOARD_WIDTH, BOARD_HEIGHT, survivor, zombies, exit, remedies, portals, settings);
-            // Hier wird geprüft, ob ein zugelassenes Zeichen eingegeben wurde -> falls nicht, nso lange wiederholen, bis etwas Zugelassenes eingegeben wurde
+            // Hier wird geprüft, ob ein zugelassenes Zeichen eingegeben wurde -> falls nicht, so lange wiederholen, bis etwas Zugelassenes eingegeben wurde
             do {
                 System.out.println("What is your next move? [w = move up | a = move left | s = move down | d = move right | q = exit | Confirm input with ENTER]");
                 input = sc.nextLine();
@@ -151,20 +150,20 @@ public class ZombieGame {
         for (int i = 0; i < yAxis; i++) {
             for (int j = 0; j < xAxis; j++) {
                 // hier wird geprüft, ob ein Objekt auf der aktuellen Position aus i und j liegt. Dabei wird ebenfalls überprüft, ob ein "höherwertiges" Objekt danach kommt
-                // Beispiel: Zombie wird statt des Spielers angezeigt, da er ihne gefessen hat
+                // Beispiel: Zombie wird statt des Spielers angezeigt, da er ihn gefressen hat
                 // Beispiel: Spieler wird über Portal angezeigt
                 sign = "-";
-                // falls der Ausgang auf der aktuellen Position liegt
+                // falls der Ausgang auf der aktuellen Koordinate des Spielfelds (i und j) liegt, wird das entsprechende Symbol zum Printen ausgewählt
                 if (j == exit.getX() && i == exit.getY()) {
                     sign = "#";
                 }
-                // falls ein Heilmittel auf der aktuellen Position liegt
+                // falls ein Heilmittel auf der aktuellen Koordinate des Spielfelds (i und j) liegt, wird das entsprechende Symbol zum Printen ausgewählt
                 for (Point r : remedies) {
                     if (r.getX() == j && r.getY() == i) {
                         sign = "\u2695";
                     }
                 }
-                // falls ein Portal auf der aktuellen Position liegt
+                // falls ein Portal auf der aktuellen Koordinate des Spielfelds (i und j) liegt, wird das entsprechende Symbol zum Printen ausgewählt
                 if (settings.hasPortals) {
                     for (Point p : portals) {
                         if (p.getX() == j && p.getY() == i) {
@@ -172,11 +171,11 @@ public class ZombieGame {
                         }
                     }
                 }
-                // falls der Spieler auf der aktuellen Position liegt
+                // falls der Spieler auf der aktuellen Koordinate des Spielfelds (i und j) liegt, wird das entsprechende Symbol zum Printen ausgewählt
                 if (j == survivor.getX() && i == survivor.getY()) {
                     sign = "S";
                 }
-                // falls ein Zombie auf der aktuellen Position liegt
+                // falls ein Zombie auf der aktuellen Koordinate des Spielfelds (i und j) liegt, wird das entsprechende Symbol zum Printen ausgewählt
                 for (Point z : zombies) {
                     if (z.getX() == j && z.getY() == i) {
                         sign = "Z";
