@@ -4,7 +4,8 @@ import java.util.Date;
 
 public class Item {
     private int itemId;
-    OrderDetail oD1 = new OrderDetail(1337, 123, "ABC");
+    Item i1 = new Item(530, 1.2, "Mit diesem cleanen Look bist du immer stylish unterwegs", 100.20);
+
     private String description;
     private double price;
     private double weight;
@@ -48,8 +49,5 @@ public class Item {
         this.price = price;
     }
 
-    public int findOrderIdForItem(int itemId) {  // to make a connection between the classes OrderDetail and Item
-        return oD1.getOrderDetailId();
-    }
 
 }
