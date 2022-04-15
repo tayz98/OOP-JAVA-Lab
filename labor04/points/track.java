@@ -2,38 +2,38 @@ package labor04.points;
 
 import java.util.Scanner;
 
-public class Strecke {
-    private Punkt p;
-    private Punkt q;
+public class track {
+    private Point p;
+    private Point q;
 
-    public Strecke(Punkt p, Punkt q) {
+    public track(Point p, Point q) {
         this.p = p;
         this.q = q;
     }
 
-    public Punkt getP() {
+    public Point getP() {
         return p;
     }
 
-    public void setP(Punkt p) {
+    public void setP(Point p) {
         this.p = p;
     }
 
-    public Punkt getQ() {
+    public Point getQ() {
         return q;
     }
 
-    public void setQ(Punkt q) {
+    public void setQ(Point q) {
         this.q = q;
     }
 
     public void read() {
         Scanner sc = new Scanner(System.in);
         try {
-            System.out.println("Erster Punkt");
+            System.out.println("First point");
             System.out.println("-------------------");
             p.read();
-            System.out.println("Zweiter Punkt");
+            System.out.println("Second point");
             System.out.println("-------------------");
             q.read();
         } catch (Exception e) {
@@ -41,7 +41,7 @@ public class Strecke {
         }
     }
 
-    public double getLaenge() {
+    public double getLength() {
         return Math.sqrt(Math.pow((q.getX() - p.getX()), 2) + Math.pow((q.getY() - p.getY()), 2));
     }
 
