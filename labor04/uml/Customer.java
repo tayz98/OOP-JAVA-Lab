@@ -3,6 +3,7 @@ package labor04.uml;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Customer {
     private int customerId; // selbst
     private String name;
@@ -10,6 +11,9 @@ public class Customer {
     private String contact;
     private boolean active;
     private List<Order> orderList = new ArrayList<>();
+
+    Customer c1 = new Customer(12345, "Neumann", "Musterstraße 1", "Max.Mustermann@gmail.com", true, null);
+    Order o1 = new Order(42069, null, c1, null);
 
     // constructor
     public Customer(int customerId, String name, String deliveryAddress, String contact, boolean active, List<Order> orderList) {
@@ -70,8 +74,12 @@ public class Customer {
         this.orderList = orderList;
     }
 
-    // method to add an order to existing orderlist
+    // method to add an order to an existing orderlist
     public void addToOrderlist(Order order) {
         this.orderList.add(order);
+    }
+
+    public int getOrderIdForCustomerId(Customer customer) { // make a connection between order and customer
+        return c1.getCustomerId();
     }
 }

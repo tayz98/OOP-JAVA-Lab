@@ -5,6 +5,7 @@ public class Payment {
     private float amount;
     private Order order;
 
+
     public Payment(int paymentId, float amount, Order order) {
         this.paymentId = paymentId;
         this.amount = amount;
@@ -36,4 +37,7 @@ public class Payment {
         this.order = order;
     }
 
+    public int getPaymentIdForCustomerId(Order order) { // make a connection between Order and Payment
+        return getPaymentId();
+    }
 }

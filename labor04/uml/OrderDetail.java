@@ -3,7 +3,8 @@ package labor04.uml;
 public class OrderDetail {
     private int orderDetailId;
     private int qty;
-
+    Item i1 = new Item(530, 1.2, "Mit diesem cleanen Look bist du immer stylish unterwegs", 100.20);
+    private String taxStatus;
 
     public OrderDetail(int orderDetailId, int qty, String taxStatus) {
         this.orderDetailId = orderDetailId;
@@ -35,19 +36,16 @@ public class OrderDetail {
         this.taxStatus = taxStatus;
     }
 
-    private String taxStatus;
-
-    public double calculateSubTotal(String tax, double price) {
-        int taxRate;
-        tax = taxStatus;
-        if (tax.equals("ABC")) taxRate = 19;
-        else taxRate = 0;
-
-        return 0;
+    public double calculateSubTotal(double price) {
+        return i1.getPrice() * getQty();
     }
 
 
-    public double calculateWeight(int qty, float weight) {
-        return 0;
+    public double calculateWeight(int qty) {
+        return i1.getWeight() * qty;
+    }
+
+    public int findItemIdFromOrderDetailId(int orderDetailId) {
+        return i1.getItemId();
     }
 }

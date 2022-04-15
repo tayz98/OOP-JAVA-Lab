@@ -1,12 +1,15 @@
 package labor04.uml;
 
+import java.util.Date;
+
 public class Item {
     private int itemId;
-    private float weight;
+    OrderDetail oD1 = new OrderDetail(1337, 123, "ABC");
     private String description;
     private double price;
+    private double weight;
 
-    public Item(int itemId, float weight, String description, double price) {
+    public Item(int itemId, double weight, String description, double price) {
         this.itemId = itemId;
         this.weight = weight;
         this.description = description;
@@ -25,6 +28,10 @@ public class Item {
         this.weight = weight;
     }
 
+    public double getWeight() {
+        return weight;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -33,7 +40,7 @@ public class Item {
         this.description = description;
     }
 
-    public double getPrice() {
+    public double getPrice() {      // we use getPrice instead of getPriceForQuantity because it makes more sense here.
         return price;
     }
 
@@ -41,14 +48,8 @@ public class Item {
         this.price = price;
     }
 
-    public double getPriceForQuantity(int qty, double price) {
-
-        return 0;
-    }
-
-    public double getWeight(int qty, float weight) {
-
-        return 0;
+    public int findOrderIdForItem(int itemId) {  // to make a connection between the classes OrderDetail and Item
+        return oD1.getOrderDetailId();
     }
 
 }

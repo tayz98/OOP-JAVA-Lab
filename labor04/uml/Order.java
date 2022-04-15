@@ -50,7 +50,7 @@ public class Order {
         this.paymentList = paymentList;
     }
 
-    // method to add an payment to an existing paymentlist
+    // method to add a payment to an existing paymentlist
     public void addToPaymentList(Payment payment) {
         this.paymentList.add(payment);
     }
