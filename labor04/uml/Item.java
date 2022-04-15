@@ -6,6 +6,13 @@ public class Item {
     private String description;
     private double price;
 
+    public Item(int itemId, float weight, String description, double price) {
+        this.itemId = itemId;
+        this.weight = weight;
+        this.description = description;
+        this.price = price;
+    }
+
     public int getItemId() {
         return itemId;
     }
@@ -34,11 +41,13 @@ public class Item {
         this.price = price;
     }
 
-    public int getPriceForQuantity() {
+    public double getPriceForQuantity(int qty, double price) {
+
         return 0;
     }
 
-    public int getWeight() {
+    public double getWeight(int qty, float weight) {
+
         return 0;
     }
 

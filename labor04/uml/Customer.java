@@ -6,6 +6,15 @@ import java.util.List;
 public class Customer {
     private int customerId;
 
+    public Customer(int customerId, String name, String deliveryAddress, String contact, boolean active, List<Order> orderList) {
+        this.customerId = customerId;
+        this.name = name;
+        this.deliveryAddress = deliveryAddress;
+        this.contact = contact;
+        this.active = active;
+        this.orderList = orderList;
+    }
+
     public int getCustomerId() {
         return customerId;
     }

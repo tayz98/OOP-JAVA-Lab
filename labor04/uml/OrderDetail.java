@@ -4,6 +4,13 @@ public class OrderDetail {
     private int orderDetailId;
     private int qty;
 
+
+    public OrderDetail(int orderDetailId, int qty, String taxStatus) {
+        this.orderDetailId = orderDetailId;
+        this.qty = qty;
+        this.taxStatus = taxStatus;
+    }
+
     public int getOrderDetailId() {
         return orderDetailId;
     }
@@ -30,12 +37,12 @@ public class OrderDetail {
 
     private String taxStatus;
 
-    public int calculateSubTotal() {
+    public double calculateSubTotal(int qty) {
         return 0;
     }
 
 
-    public int calculateWeight() {
+    public double calculateWeight(int qty, float weight) {
         return 0;
     }
 }

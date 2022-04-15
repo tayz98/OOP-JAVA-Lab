@@ -3,6 +3,12 @@ package labor04.uml;
 public class Payment {
     private int paymentId;
 
+    public Payment(int paymentId, float amount, Order order) {
+        this.paymentId = paymentId;
+        this.amount = amount;
+        this.order = order;
+    }
+
     public int getPaymentId() {
         return paymentId;
     }
