@@ -1,7 +1,9 @@
 package labor04.uml;
 
 public class Payment {
-    private int paymentId;
+    private int paymentId; // selbst
+    private float amount;
+    private Order order;
 
     public Payment(int paymentId, float amount, Order order) {
         this.paymentId = paymentId;
@@ -9,6 +11,7 @@ public class Payment {
         this.order = order;
     }
 
+    // getter and setter
     public int getPaymentId() {
         return paymentId;
     }
@@ -33,6 +36,4 @@ public class Payment {
         this.order = order;
     }
 
-    private float amount;
-    private Order order;
 }

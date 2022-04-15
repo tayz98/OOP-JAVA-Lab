@@ -4,8 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Customer {
-    private int customerId;
+    private int customerId; // selbst
+    private String name;
+    private String deliveryAddress;
+    private String contact;
+    private boolean active;
+    private List<Order> orderList = new ArrayList<>();
 
+    // constructor
     public Customer(int customerId, String name, String deliveryAddress, String contact, boolean active, List<Order> orderList) {
         this.customerId = customerId;
         this.name = name;
@@ -15,6 +21,7 @@ public class Customer {
         this.orderList = orderList;
     }
 
+    // getter and setter methods
     public int getCustomerId() {
         return customerId;
     }
@@ -63,9 +70,8 @@ public class Customer {
         this.orderList = orderList;
     }
 
-    private String name;
-    private String deliveryAddress;
-    private String contact;
-    private boolean active;
-    private List<Order> orderList = new ArrayList<>();
+    // method to add an order to existing orderlist
+    public void addToOrderlist(Order order) {
+        this.orderList.add(order);
+    }
 }

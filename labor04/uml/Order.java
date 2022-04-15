@@ -5,9 +5,10 @@ import java.util.Date;
 import java.util.List;
 
 public class Order {
-    private int orderId;
+    private int orderId; // selbst
     private Date createDate;
     private Customer customer;
+    private List<Payment> paymentList = new ArrayList<>();
 
     public Order(int orderId, Date createDate, Customer customer, List<Payment> paymentList) {
         this.orderId = orderId;
@@ -16,6 +17,7 @@ public class Order {
         this.paymentList = paymentList;
     }
 
+    // getter and setter
     public int getOrderId() {
         return orderId;
     }
@@ -23,7 +25,6 @@ public class Order {
     public void setOrderId(int orderId) {
         this.orderId = orderId;
     }
-
 
     public Date getCreateDate() {
         return createDate;
@@ -49,5 +50,9 @@ public class Order {
         this.paymentList = paymentList;
     }
 
-    private List<Payment> paymentList = new ArrayList<>();
+    // method to add an payment to an existing paymentlist
+    public void addToPaymentList(Payment payment) {
+        this.paymentList.add(payment);
+    }
+
 }
