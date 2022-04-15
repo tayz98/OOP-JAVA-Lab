@@ -10,6 +10,8 @@ public class Order {
     private Customer customer;
     private List<Payment> paymentList = new ArrayList<>();
 
+    Order o1 = new Order(42069, null, null, null);
+
     public Order(int orderId, Date createDate, Customer customer, List<Payment> paymentList) {
         this.orderId = orderId;
         this.createDate = createDate;
@@ -56,3 +58,4 @@ public class Order {
     }
 
 }
+// hier fehlen noch ein paar Methoden, um Order mit anderen Klassen zu verbinden.

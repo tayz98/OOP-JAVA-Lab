@@ -13,7 +13,7 @@ public class Customer {
     private List<Order> orderList = new ArrayList<>();
 
     Customer c1 = new Customer(12345, "Neumann", "Musterstraße 1", "Max.Mustermann@gmail.com", true, null);
-    Order o1 = new Order(42069, null, c1, null);
+
 
     // constructor
     public Customer(int customerId, String name, String deliveryAddress, String contact, boolean active, List<Order> orderList) {
@@ -79,7 +79,7 @@ public class Customer {
         this.orderList.add(order);
     }
 
-    public int getOrderIdForCustomerId(Customer customer) { // make a connection between order and customer
-        return c1.getCustomerId();
+    public int getCustomerIdForOrderId(Order order) { // make a connection between order and customer. Ist das überhaupt logisch?
+        return getCustomerId();
     }
 }

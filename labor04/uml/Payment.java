@@ -37,7 +37,7 @@ public class Payment {
         this.order = order;
     }
 
-    public int getPaymentIdForCustomerId(Order order) { // make a connection between Order and Payment
+    public int getPaymentIdForOrderId(Order order) { // make a connection between Order and Payment
         return getPaymentId();
     }
 }
