@@ -6,13 +6,11 @@ import java.util.List;
 
 public class Order {
     private int orderId;
-    private String item;
     private Date createDate;
     private Customer customer;
 
-    public Order(int orderId, String item, Date createDate, Customer customer, List<Payment> paymentList) {
+    public Order(int orderId, Date createDate, Customer customer, List<Payment> paymentList) {
         this.orderId = orderId;
-        this.item = item;
         this.createDate = createDate;
         this.customer = customer;
         this.paymentList = paymentList;
@@ -26,13 +24,6 @@ public class Order {
         this.orderId = orderId;
     }
 
-    public String getItem() {
-        return item;
-    }
-
-    public void setItem(String item) {
-        this.item = item;
-    }
 
     public Date getCreateDate() {
         return createDate;

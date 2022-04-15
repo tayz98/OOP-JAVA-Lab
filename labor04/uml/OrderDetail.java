@@ -37,7 +37,12 @@ public class OrderDetail {
 
     private String taxStatus;
 
-    public double calculateSubTotal(int qty) {
+    public double calculateSubTotal(String tax, double price) {
+        int taxRate;
+        tax = taxStatus;
+        if (tax.equals("ABC")) taxRate = 19;
+        else taxRate = 0;
+
         return 0;
     }
 
