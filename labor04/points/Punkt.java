@@ -2,16 +2,17 @@ package labor04.points;
 
 import java.util.Scanner;
 
-public class Point {
+public class Punkt {
     private double x;
     private double y;
 
     // constructor
-    public Point(double x, double y) {
+    public Punkt(double x, double y) {
         this.x = x;
         this.y = y;
     }
-    // getter and setter for the methods in class 'point'
+
+    // getter and setter for the methods in class "Punkt".
     public double getX() {
         return x;
     }
@@ -28,10 +29,10 @@ public class Point {
         this.y = y;
     }
 
-    // returns the x and y coordinates to a new string.
+    // returns the x and y coordinates to a string in format "(xStr,yStr)".
     @Override
     public String toString() {
-        return "(x=" + x + ", y=" + y + ")";
+        return "(x=" + x + ",y=" + y + ")";
     }
 
     // This method assigns the X and Y coordinates to the point based on the user input.
