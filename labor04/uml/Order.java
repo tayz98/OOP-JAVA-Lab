@@ -17,6 +17,12 @@ public class Order {
         this.paymentList = paymentList;
     }
 
+    public Order(int orderId, Date createDate, Customer customer) {
+        this.orderId = orderId;
+        this.createDate = createDate;
+        this.customer = customer;
+    }
+
     // getter and setter
     public int getOrderId() {
         return orderId;

@@ -12,8 +12,11 @@ public class Main {
 
         Order o1 = new Order(1, d1, c1, null);
         Order o2 = new Order(2, d1, c2, null);
+        Order oTest = new Order(3, d1, c1);
+        System.out.println(oTest.getPaymentList());
+        Payment p1 = new Payment(1, 12, oTest);
+        System.out.println(oTest.getPaymentList());
 
-        System.out.println(o2.getCustomerIdForThisOrder());
         //Payment p1 = new Payment(920, 300, o1);
 
         //o1.setPaymentList((List<Payment>) p1);

@@ -10,6 +10,7 @@ public class Payment {
         this.paymentId = paymentId;
         this.amount = amount;
         this.order = order;
+        order.addToPaymentList(this);
     }
 
     // getter and setter
