@@ -10,8 +10,6 @@ public class Order {
     private Customer customer;
     private List<Payment> paymentList = new ArrayList<>();
 
-    Order o1 = new Order(42069, null, null, null);
-
     public Order(int orderId, Date createDate, Customer customer, List<Payment> paymentList) {
         this.orderId = orderId;
         this.createDate = createDate;
@@ -57,5 +55,8 @@ public class Order {
         this.paymentList.add(payment);
     }
 
+    public int getCustomerIdForThisOrder() { // make a connection between order and customer. Ist das überhaupt logisch?
+        return customer.getCustomerId();
+    }
 }
 // hier fehlen noch ein paar Methoden, um Order mit anderen Klassen zu verbinden.

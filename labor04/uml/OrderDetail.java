@@ -41,8 +41,8 @@ public class OrderDetail {
     }
 
 
-    public double calculateWeight(int qty, Item item) {
-        return item.getWeight() * qty;
+    public double calculateWeight(Item item) {
+        return item.getWeight() * this.qty;
     }
 
 

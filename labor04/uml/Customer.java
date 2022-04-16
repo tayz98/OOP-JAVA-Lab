@@ -3,7 +3,6 @@ package labor04.uml;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class Customer {
     private int customerId; // selbst
     private String name;
@@ -12,10 +11,7 @@ public class Customer {
     private boolean active;
     private List<Order> orderList = new ArrayList<>();
 
-    Customer c1 = new Customer(12345, "Neumann", "Musterstraße 1", "Max.Mustermann@gmail.com", true, null);
-
-
-    // constructor
+    // constructor with orderList
     public Customer(int customerId, String name, String deliveryAddress, String contact, boolean active, List<Order> orderList) {
         this.customerId = customerId;
         this.name = name;
@@ -23,6 +19,15 @@ public class Customer {
         this.contact = contact;
         this.active = active;
         this.orderList = orderList;
+    }
+
+    // constructor without orderList
+    public Customer(int customerId, String name, String deliveryAddress, String contact, boolean active) {
+        this.customerId = customerId;
+        this.name = name;
+        this.deliveryAddress = deliveryAddress;
+        this.contact = contact;
+        this.active = active;
     }
 
     // getter and setter methods
@@ -76,10 +81,11 @@ public class Customer {
 
     // method to add an order to an existing orderlist
     public void addToOrderlist(Order order) {
-        this.orderList.add(order);
-    }
-
-    public int getCustomerIdForOrderId(Order order) { // make a connection between order and customer. Ist das überhaupt logisch?
-        return getCustomerId();
+        if (this.orderList == null) {
+            this.orderList = new ArrayList<>();
+            this.orderList.add(order);
+        } else {
+            this.orderList.add(order);
+        }
     }
 }

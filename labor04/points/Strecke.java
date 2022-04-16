@@ -1,3 +1,12 @@
+/**
+ * @name points/Strecke
+ * @package labor04
+ * @file Strecke.java
+ * @authors Veronica Zylla, Sören Zacharias, Alexander Nachtigal
+ * @email veronica.zylla@student.fh-kiel.de, soeren.zacharias@student.fh-kiel.de, alexander.nachtigal@student.fh-kiel.de
+ * @description "Strecke"-class to create a track between two points from class "Punkt"
+ */
+
 package labor04.points;
 
 import java.util.Scanner;

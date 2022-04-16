@@ -1,3 +1,12 @@
+/**
+ * @name points/Punkt
+ * @package labor04
+ * @file Punkt.java
+ * @authors Veronica Zylla, Sören Zacharias, Alexander Nachtigal
+ * @email veronica.zylla@student.fh-kiel.de, soeren.zacharias@student.fh-kiel.de, alexander.nachtigal@student.fh-kiel.de
+ * @description "Punkt"-class to create a point with x- and y-coordinate and methods
+ */
+
 package labor04.points;
 
 import java.util.Scanner;
