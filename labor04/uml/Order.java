@@ -124,7 +124,7 @@ public class Order {
             System.out.println("You have to pay for the order!");
         }
     }
-    public int getCustomerIdForThisOrder() { // could be used to for identifying customer belonging to an order. but it would go beyond the scope of the task.
+    public int getCustomerIdForThisOrder() { // could be used for identifying a customer belonging to specific order. but it would go beyond the scope of the task.
         return customer.getCustomerId();
     }
 }
