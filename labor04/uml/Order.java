@@ -5,18 +5,22 @@ import java.util.Date;
 import java.util.List;
 
 public class Order {
-    private int orderId; // selbst
+    private int orderId; // optional parameter for better handling
     private Date createDate;
     private Customer customer;
     private List<Payment> paymentList = new ArrayList<>();
+    private List<OrderDetail> orderDetailList = new ArrayList<>();
 
-    public Order(int orderId, Date createDate, Customer customer, List<Payment> paymentList) {
+    // constructor with paymentList and orderDetailList
+    public Order(int orderId, Date createDate, Customer customer, List<Payment> paymentList, List<OrderDetail> orderDetailList) {
         this.orderId = orderId;
         this.createDate = createDate;
         this.customer = customer;
         this.paymentList = paymentList;
+        this.orderDetailList = orderDetailList;
     }
 
+    // constructor without paymentList and orderDetailList
     public Order(int orderId, Date createDate, Customer customer) {
         this.orderId = orderId;
         this.createDate = createDate;
@@ -56,13 +60,64 @@ public class Order {
         this.paymentList = paymentList;
     }
 
+    public List<OrderDetail> getOrderDetailList() {
+        return orderDetailList;
+    }
+
+    public void setOrderDetailList(List<OrderDetail> orderDetailList) {
+        this.orderDetailList = orderDetailList;
+    }
+
     // method to add a payment to an existing paymentlist
+    // if the list is null, the method creates a new list
     public void addToPaymentList(Payment payment) {
-        this.paymentList.add(payment);
+        if (this.paymentList == null) {
+            this.paymentList = new ArrayList<>();
+            this.paymentList.add(payment);
+        } else {
+            this.paymentList.add(payment);
+        }
+    }
+
+    // method to add an orderDetail to an existing orderDetailList
+    // if the list is null, the method creates a new list
+    public void addToOrderDetailList(OrderDetail orderDetail) {
+        if (this.orderDetailList ==  null) {
+            this.orderDetailList = new ArrayList<>();
+            this.orderDetailList.add(orderDetail);
+        } else {
+            this.orderDetailList.add(orderDetail);
+        }
+    }
+
+    // method to calculate sum of all payments tht belong to this order
+    public float addUpPayments() {
+        float sum = 0;
+        for (Payment p : this.paymentList) {
+            sum += p.getAmount();
+        }
+        return sum;
+    }
+
+    // method to calculate the total weight of an order
+    public double addUpWeight() {
+        double totalWeight = 0;
+        for (OrderDetail od : this.orderDetailList) {
+            totalWeight += od.calculateWeight();
+        }
+        return totalWeight;
+    }
+
+    // method to calculate the total price of an order (including taxes)
+    public double addUpPrice() {
+        double endPrice = 0;
+        for (OrderDetail od : this.orderDetailList) {
+            endPrice += od.calculateSubTotal();
+        }
+        return Math.round(endPrice * 100.0) / 100.0;
     }
 
     public int getCustomerIdForThisOrder() { // make a connection between order and customer. Ist das überhaupt logisch?
         return customer.getCustomerId();
     }
 }
-// hier fehlen noch ein paar Methoden, um Order mit anderen Klassen zu verbinden.

@@ -1,15 +1,20 @@
 package labor04.uml;
 
 public class OrderDetail {
-    private int orderDetailId;
+    private int orderDetailId; // optional parameter for better handling
     private int qty;
-    OrderDetail oD1 = new OrderDetail(1337, 123, "ABC");
     private String taxStatus;
+    private Order order;
+    private Item item;
 
-    public OrderDetail(int orderDetailId, int qty, String taxStatus) {
+    // constructor
+    public OrderDetail(int orderDetailId, int qty, String taxStatus, Order order, Item item) {
         this.orderDetailId = orderDetailId;
         this.qty = qty;
         this.taxStatus = taxStatus;
+        this.order = order;
+        this.item = item;
+        order.addToOrderDetailList(this);
     }
 
     public int getOrderDetailId() {
@@ -36,13 +41,23 @@ public class OrderDetail {
         this.taxStatus = taxStatus;
     }
 
-    public double calculateSubTotal(double price, Item item) {
-        return item.getPrice() * getQty();
+    // method to calculate the total price (quantity * price of item)
+    public double getPriceForQuantity() {
+        return item.getPrice() * this.getQty();
     }
 
+    // method to calculate the total sum (including taxes)
+    public double calculateSubTotal() {
+        if (this.taxStatus == "german") {
+            return Math.round((this.getPriceForQuantity() * 1.19) * 100.0) / 100.0;
+        } else {
+            return Math.round(this.getPriceForQuantity() * 100.0) / 100.0;
+        }
+    }
 
-    public double calculateWeight(Item item) {
-        return item.getWeight() * this.qty;
+    // method to calculate the total weight of all items (quantity * weight of item)
+    public double calculateWeight() {
+        return item.getWeight() * this.getQty();
     }
 
 

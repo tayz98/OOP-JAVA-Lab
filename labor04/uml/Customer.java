@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Customer {
-    private int customerId; // selbst
+    private int customerId; // optional parameter for better handling
     private String name;
     private String deliveryAddress;
     private String contact;

@@ -3,13 +3,12 @@ package labor04.uml;
 import java.util.Date;
 
 public class Item {
-    private int itemId;
-    Item i1 = new Item(530, 1.2, "Mit diesem cleanen Look bist du immer stylish unterwegs", 100.20);
-
+    private int itemId; // optional parameter for better handling
     private String description;
     private double price;
     private double weight;
 
+    // constructor
     public Item(int itemId, double weight, String description, double price) {
         this.itemId = itemId;
         this.weight = weight;
@@ -17,6 +16,7 @@ public class Item {
         this.price = price;
     }
 
+    // getter and setter
     public int getItemId() {
         return itemId;
     }
@@ -48,6 +48,5 @@ public class Item {
     public void setPrice(double price) {
         this.price = price;
     }
-
 
 }

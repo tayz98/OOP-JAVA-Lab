@@ -1,10 +1,9 @@
 package labor04.uml;
 
 public class Payment {
-    private int paymentId; // selbst
+    private int paymentId; // optional parameter for better handling
     private float amount;
     private Order order;
-
 
     public Payment(int paymentId, float amount, Order order) {
         this.paymentId = paymentId;
