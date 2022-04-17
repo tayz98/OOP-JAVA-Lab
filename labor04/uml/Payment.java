@@ -1,25 +1,15 @@
 package labor04.uml;
 
 public class Payment {
-    private int paymentId; // optional parameter for better handling
     private float amount;
     private Order order;
 
-    public Payment(int paymentId, float amount, Order order) {
-        this.paymentId = paymentId;
+    public Payment(float amount, Order order) {
         this.amount = amount;
         this.order = order;
         order.addToPaymentList(this);
     }
     // getter and setter
-    public int getPaymentId() {
-        return paymentId;
-    }
-
-    public void setPaymentId(int paymentId) {
-        this.paymentId = paymentId;
-    }
-
     public float getAmount() {
         return amount;
     }
@@ -36,7 +26,4 @@ public class Payment {
         this.order = order;
     }
 
-    public int getOrderIdForThisPayment(Order order) { // make a connection between Order and Payment
-        return order.getOrderId();
-    }
 }

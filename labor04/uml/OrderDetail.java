@@ -1,28 +1,18 @@
 package labor04.uml;
 
 public class OrderDetail {
-    private int orderDetailId; // optional parameter for better handling
     private int qty;
     private String taxStatus;
     private Order order;
     private Item item;
 
     // constructor
-    public OrderDetail(int orderDetailId, int qty, String taxStatus, Order order, Item item) {
-        this.orderDetailId = orderDetailId;
+    public OrderDetail(int qty, String taxStatus, Order order, Item item) {
         this.qty = qty;
         this.taxStatus = taxStatus;
         this.order = order;
         this.item = item;
         order.addToOrderDetailList(this);
-    }
-
-    public int getOrderDetailId() {
-        return orderDetailId;
-    }
-
-    public void setOrderDetailId(int orderDetailId) {
-        this.orderDetailId = orderDetailId;
     }
 
     public int getQty() {

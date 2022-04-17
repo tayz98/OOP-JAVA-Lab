@@ -1,28 +1,18 @@
 package labor04.uml;
 
 public class Item {
-    private int itemId; // optional parameter for better handling
     private String description;
     private double price;
     private double weight;
 
     // constructor
-    public Item(int itemId, double weight, String description, double price) {
-        this.itemId = itemId;
+    public Item(double weight, String description, double price) {
         this.weight = weight;
         this.description = description;
         this.price = price;
     }
 
     // getter and setter
-    public int getItemId() {
-        return itemId;
-    }
-
-    public void setItemId(int itemId) {
-        this.itemId = itemId;
-    }
-
     public void setWeight(float weight) {
         this.weight = weight;
     }
