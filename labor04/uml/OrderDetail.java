@@ -48,17 +48,14 @@ public class OrderDetail {
 
     // method to calculate the total sum (including taxes)
     public double calculateSubTotal() {
-        if (this.taxStatus == "german") {
+        if (this.taxStatus.equals("german")) {
             return Math.round((this.getPriceForQuantity() * 1.19) * 100.0) / 100.0;
         } else {
             return Math.round(this.getPriceForQuantity() * 100.0) / 100.0;
         }
     }
-
     // method to calculate the total weight of all items (quantity * weight of item)
     public double calculateWeight() {
         return item.getWeight() * this.getQty();
     }
-
-
 }

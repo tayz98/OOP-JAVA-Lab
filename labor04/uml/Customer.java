@@ -9,20 +9,22 @@ public class Customer {
     private String deliveryAddress;
     private String contact;
     private boolean active;
+    private boolean hasPaid;
     private List<Order> orderList = new ArrayList<>();
 
     // constructor with orderList
-    public Customer(int customerId, String name, String deliveryAddress, String contact, boolean active, List<Order> orderList) {
+    public Customer(int customerId, String name, String deliveryAddress, String contact, boolean active, boolean hasPaid, List<Order> orderList) {
         this.customerId = customerId;
         this.name = name;
         this.deliveryAddress = deliveryAddress;
         this.contact = contact;
         this.active = active;
+        this.hasPaid = hasPaid;
         this.orderList = orderList;
     }
 
     // constructor without orderList
-    public Customer(int customerId, String name, String deliveryAddress, String contact, boolean active) {
+    public Customer(int customerId, String name, String deliveryAddress, String contact, boolean active, boolean hasPaid) {
         this.customerId = customerId;
         this.name = name;
         this.deliveryAddress = deliveryAddress;
@@ -70,7 +72,13 @@ public class Customer {
     public void setActive(boolean active) {
         this.active = active;
     }
+    public boolean gethasPaid() {
+        return hasPaid;
+    }
 
+    public void setHasPaid(boolean hasPaid) {
+        this.hasPaid = hasPaid;
+    }
     public List<Order> getOrderList() {
         return orderList;
     }
@@ -81,7 +89,7 @@ public class Customer {
 
     // method to add an order to an existing orderlist
     public void addToOrderlist(Order order) {
-        if (this.orderList == null) {
+        if (this.orderList == null) { // if you pass "null" to the order list, a new list needs to be generated. Otherwise, the list will contain an empty element before a new element (new order) gets added.
             this.orderList = new ArrayList<>();
             this.orderList.add(order);
         } else {

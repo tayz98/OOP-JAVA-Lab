@@ -1,7 +1,5 @@
 package labor04.uml;
 
-import java.util.Date;
-
 public class Item {
     private int itemId; // optional parameter for better handling
     private String description;
@@ -48,5 +46,4 @@ public class Item {
     public void setPrice(double price) {
         this.price = price;
     }
-
 }

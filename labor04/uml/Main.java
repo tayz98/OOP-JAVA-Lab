@@ -1,12 +1,10 @@
 package labor04.uml;
 import java.util.Date;
-import java.util.List;
-
 public class Main {
 
     public static void main(String[] args) {
         Date d1 = new Date();
-        Customer c1 = new Customer(1, "Peter Petersen", "Musterstraße 1", "peterPetersen@hotmail.de", true);
+        Customer c1 = new Customer(1, "Peter Petersen", "Musterstraße 1", "peterPetersen@hotmail.de", true, true);
         Order o1 = new Order(1, d1, c1);
         Payment p1 = new Payment(1, 12.0f, o1);
         Payment p2 = new Payment(2, 11.0f, o1);
@@ -14,6 +12,11 @@ public class Main {
         Item i2 = new Item(2, 14, "Another awesome item you need!", 99.99);
         OrderDetail od1 = new OrderDetail(1, 3, "german", o1, i1);
         OrderDetail od2 = new OrderDetail(2, 2, "german", o1, i2);
+
+        // prints out all customer information from the object c1.
+        System.out.println("Customer information: \n" + "ID: " + c1.getCustomerId());
+        System.out.println("Name: " + c1.getName()+ "\n" + "Address: " + c1.getDeliveryAddress());
+        System.out.println("Contact: " + c1.getContact() + "\nis active: " + c1.isActive() + "\nhas paid: " + c1.gethasPaid());
 
         // check if payments get directed to Order o1 correctly
         System.out.println("payment 1 of Order o1: " + o1.getPaymentList().get(0).getAmount());
@@ -37,4 +40,3 @@ public class Main {
         System.out.println("Total price of Order o1: " + o1.addUpPrice());
     }
 }
-

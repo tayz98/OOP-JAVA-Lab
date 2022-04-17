@@ -11,7 +11,6 @@ public class Payment {
         this.order = order;
         order.addToPaymentList(this);
     }
-
     // getter and setter
     public int getPaymentId() {
         return paymentId;

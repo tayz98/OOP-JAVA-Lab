@@ -117,7 +117,14 @@ public class Order {
         return Math.round(endPrice * 100.0) / 100.0;
     }
 
-    public int getCustomerIdForThisOrder() { // make a connection between order and customer. Ist das überhaupt logisch?
+    public  void orderIsPaid() {
+        if (customer.gethasPaid()) {
+            System.out.println("The order was paid, thank you.");
+        } else {
+            System.out.println("You have to pay for the order!");
+        }
+    }
+    public int getCustomerIdForThisOrder() { // could be used to for identifying customer belonging to an order. but it would go beyond the scope of the task.
         return customer.getCustomerId();
     }
 }
