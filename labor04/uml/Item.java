@@ -1,5 +1,4 @@
 package labor04.uml;
-
 public class Item {
     private String description;
     private double price;

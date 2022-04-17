@@ -42,10 +42,10 @@ public class Strecke {
     public void read() {
         Scanner sc = new Scanner(System.in);
         try {
-            System.out.println("First point");
+            System.out.println("Erster Punkt");
             System.out.println("-------------------");
             p.read();
-            System.out.println("Second point");
+            System.out.println("Zweiter Punkt");
             System.out.println("-------------------");
             q.read();
         } catch (Exception e) {

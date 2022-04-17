@@ -48,13 +48,13 @@ public class Punkt {
     public void read() {
         Scanner sc = new Scanner(System.in);
         try {
-            System.out.printf("Enter a value for the x coordinate: ");
+            System.out.printf("Bitte geben Sie einen Wert für die x Koordinate ein: ");
             this.x = sc.nextDouble();
-            System.out.printf("Enter a value for the y coordinate: ");
+            System.out.printf("Bitte geben Sie einen Wert für die y Koordinate ein: ");
             this.y = sc.nextDouble();
+            System.out.println(); // line indent for formatting
         } catch (Exception e) {
             System.out.println("Error");
         }
-
     }
 }

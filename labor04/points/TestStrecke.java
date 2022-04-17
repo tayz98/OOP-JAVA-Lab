@@ -18,6 +18,7 @@ public class TestStrecke {
         System.out.println("Die Laenge der Strecke " + s + " betraegt " + s.getLength() + ".");
         System.out.println();
         System.out.println("Strecke s eingeben:");
+        System.out.println();
         s.read();
         System.out.println();
         System.out.println("Die Laenge der Strecke " + s + " betraegt " + s.getLength() + ".");

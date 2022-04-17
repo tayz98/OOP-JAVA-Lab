@@ -1,3 +1,12 @@
+/**
+ * @name uml
+ * @package labor04
+ * @file Main.java
+ * @authors Veronica Zylla, Sören Zacharias, Alexander Nachtigal
+ * @email veronica.zylla@student.fh-kiel.de, soeren.zacharias@student.fh-kiel.de, alexander.nachtigal@student.fh-kiel.de
+ * @description this program displays the uml diagram from the task and queries the data in the main method
+ */
+
 package labor04.uml;
 import java.util.Date;
 public class Main {
