@@ -1,3 +1,12 @@
+/**
+ * @name points/Punkt
+ * @package labor04
+ * @file Punkt.java
+ * @authors Veronica Zylla, Sören Zacharias, Alexander Nachtigal
+ * @email veronica.zylla@student.fh-kiel.de, soeren.zacharias@student.fh-kiel.de, alexander.nachtigal@student.fh-kiel.de
+ * @description "Punkt"-class to create a point with x- and y-coordinate and methods
+ */
+
 package labor04.points;
 
 import java.util.Scanner;
@@ -6,11 +15,13 @@ public class Punkt {
     private double x;
     private double y;
 
+    // constructor
     public Punkt(double x, double y) {
         this.x = x;
         this.y = y;
     }
 
+    // getter and setter for the methods in class "Punkt".
     public double getX() {
         return x;
     }
@@ -27,21 +38,23 @@ public class Punkt {
         this.y = y;
     }
 
+    // returns the x and y coordinates to a string in format "(xStr,yStr)".
     @Override
     public String toString() {
-        return "(x=" + x + ", y=" + y + ")";
+        return "(x=" + x + ",y=" + y + ")";
     }
 
+    // This method assigns the X and Y coordinates to the point based on the user input.
     public void read() {
         Scanner sc = new Scanner(System.in);
         try {
-            System.out.printf("Wert fuer x eingeben: ");
+            System.out.printf("Bitte geben Sie einen Wert für die x Koordinate ein: ");
             this.x = sc.nextDouble();
-            System.out.printf("Wert fuer y eingeben: ");
+            System.out.printf("Bitte geben Sie einen Wert für die y Koordinate ein: ");
             this.y = sc.nextDouble();
+            System.out.println(); // line indent for formatting
         } catch (Exception e) {
             System.out.println("Error");
         }
-
     }
 }

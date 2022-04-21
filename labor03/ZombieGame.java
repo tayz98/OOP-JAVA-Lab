@@ -247,7 +247,7 @@ public class ZombieGame {
         System.out.println("***********************************");
     }
 
-    // Methode zur Ausgabe einer Willkommen-Nachricht
+    // Methode zur Ausgabe einer Willkommensnachricht
     public static void printWelcomeMessage() {
         PrintStream printStream = new PrintStream(System.out, true, StandardCharsets.UTF_8); // wird benötigt, um medizinisches Zeichen anzuzeigen
         System.out.println("***********************************");
