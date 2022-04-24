@@ -1,67 +1,54 @@
 package labor05;
 
-/**
- * @author SörenZacharias
- * @version 1
- * @since 1
- */
 public class X {
-  // Funktion gibt nur true oder false zurück
-  public static boolean drawBoard(final int[] arrayIn, final int in) {
-    for (int i = 0; i < in; i++)
-      if (arrayIn[i] == arrayIn[in]){
-        return true;
-      }
-    for (int i = in - 1, j = arrayIn[in] - 1; i >= 0; i--, j--) {
-      if (arrayIn[i] == j) {
-        return true;
-      }
+    public static boolean drawBoard(final int[] drawBoardArr, final int givenInteger) {
+        for (int i = 0; i < givenInteger; i++) {
+          if (drawBoardArr[i] == drawBoardArr[givenInteger]) {
+            return true;
+          }
+        }
+        for (int a = givenInteger - 1, b = drawBoardArr[givenInteger] - 1; a >= 0; a--, b--) {
+          if (drawBoardArr[a] == b) {
+            return true;
+          }
+        }
+        for (int b = givenInteger - 1, a = drawBoardArr[givenInteger] + 1; b >= 0; b--, a++) {
+          if (drawBoardArr[b] == a) {
+            return true;
+          }
+        }
+        return false;
     }
-    for (int i = in - 1, j = arrayIn[in] + 1; i >= 0; i--, j++) {
-      if (arrayIn[i] == j) {
-        return true;
-      }
-    }
-    return false;
-  }
 
-
-  public static boolean a(final int[] arrayIn, final int in) {
-    if (in == arrayIn.length) {
-      drawBoard(arrayIn);
-      return true;
+    public static boolean givenDrawBoardArr(final int[] drawBoardArr, final int givenInteger) {
+        if (givenInteger == 8) {
+            drawBoard(drawBoardArr);
+            return true;
+        }
+        for (int b = 0; b < 8; b++) {
+            drawBoardArr[givenInteger] = b;
+            if (drawBoard(drawBoardArr, givenInteger)) {
+              continue;
+          }
+            final boolean C = givenDrawBoardArr(drawBoardArr, givenInteger + 1);
+            if (C) {
+              return true;
+            }
+        }
+        return false;
     }
-    for (int i = 0; i < arrayIn.length; i++) {
-      arrayIn[in] = i;
-      if (drawBoard(arrayIn, in)) {
-        continue;
-      }
-      final boolean C = a(arrayIn, in + 1);
-      if (C) {
-        return true;
-      }
-    }
-    return false;
-  }
 
-  /**
-   * description test
-   * @param A
-   */
-  public static void drawBoard(final int[] A) {
-    for (int i = 0; i < A.length; i++) {
-      for (int j = 0; j < A.length; j++) {
-        System.out.print("|" + ((i == A[j]) ? 'D' : ' '));
-      }
-      System.out.println("|");
+    public static void drawBoard(final int[] drawBoardArr) {
+        for (int a = 0; a < 8; a++) {
+            for (int B = 0; B < 8; B++) {
+              System.out.print("|" + ((a == drawBoardArr[B]) ? 'D' : ' '));
+            }
+            System.out.println("|");
+        }
     }
-  }
 
-  public static void main(final String[] args) {
-    /**
-     * array with length 8 and filled with 0's
-     */
-    final int[] arrayInt = { 0, 0, 0, 0, 0, 0, 0, 0 };
-    a(arrayInt, 0);
-  }
+    public static void main(final String[] args) {
+        final int[] drawBoardArr = {0, 0, 0, 0, 0, 0, 0, 0};
+        givenDrawBoardArr(drawBoardArr, 0);
+    }
 }
