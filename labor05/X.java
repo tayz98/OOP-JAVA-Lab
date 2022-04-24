@@ -12,7 +12,7 @@ public class X {
             return true; // leaves the method givenDrawBoardArr completely.
         }
         for (int i = 0; i < 8; i++) {
-            drawBoardArr[index] = i; // at the end of the loop, drawBoardArr[8] = { 0, 4, 7, 5, 2, 6, 1, 3}
+            drawBoardArr[index] = i; // at the end of the loop, drawBoardArr[7] = { 0, 4, 7, 5, 2, 6, 1, 3}
             if (drawBoard(drawBoardArr, index)) { // line 26,  if true is returned, the next line will be executed.
                 continue;
             }
