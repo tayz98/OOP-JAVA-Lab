@@ -7,13 +7,13 @@ public class X {
             return true;
           }
         }
-        for (int a = givenInteger - 1, b = drawBoardArr[givenInteger] - 1; a >= 0; a--, b--) {
-          if (drawBoardArr[a] == b) {
+        for (int j = givenInteger - 1, b = drawBoardArr[givenInteger] - 1; j >= 0; j--, b--) {
+          if (drawBoardArr[j] == b) {
             return true;
           }
         }
-        for (int b = givenInteger - 1, a = drawBoardArr[givenInteger] + 1; b >= 0; b--, a++) {
-          if (drawBoardArr[b] == a) {
+        for (int k = givenInteger - 1, a = drawBoardArr[givenInteger] + 1; k >= 0; k--, a++) {
+          if (drawBoardArr[k] == a) {
             return true;
           }
         }
@@ -25,13 +25,13 @@ public class X {
             drawBoard(drawBoardArr);
             return true;
         }
-        for (int b = 0; b < 8; b++) {
-            drawBoardArr[givenInteger] = b;
+        for (int i = 0; i < 8; i++) {
+            drawBoardArr[givenInteger] = i;
             if (drawBoard(drawBoardArr, givenInteger)) {
               continue;
           }
-            final boolean C = givenDrawBoardArr(drawBoardArr, givenInteger + 1);
-            if (C) {
+            final boolean loop = givenDrawBoardArr(drawBoardArr, givenInteger + 1);
+            if (loop) {
               return true;
             }
         }
@@ -39,9 +39,9 @@ public class X {
     }
 
     public static void drawBoard(final int[] drawBoardArr) {
-        for (int a = 0; a < 8; a++) {
-            for (int B = 0; B < 8; B++) {
-              System.out.print("|" + ((a == drawBoardArr[B]) ? 'D' : ' '));
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+              System.out.print("|" + ((i == drawBoardArr[j]) ? 'D' : ' '));
             }
             System.out.println("|");
         }
