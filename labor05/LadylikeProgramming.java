@@ -29,7 +29,7 @@ public class LadylikeProgramming {
      * The method is logically divided into 2 parts.
      * <p>
      * In the first part, the method checks, if the given param is 8.
-     * If it is, the program jumps to the void method drawBoard in line 72
+     * If it is, the program jumps to the void method drawBoard in line 99.
      * and leaves the method that is in place by returning true.
      * <p>
      * In the second part, a for loop is run through.
@@ -44,15 +44,15 @@ public class LadylikeProgramming {
      */
     public static boolean givenDrawBoardArr(final int[] drawBoardArr, final int index) {
         if (index == 8) {
-            drawBoard(drawBoardArr); // this method call goes to line 72
+            drawBoard(drawBoardArr); // this method call goes to line 99.
             return true; // leaves the method givenDrawBoardArr completely.
         }
         for (int i = 0; i < 8; i++) {
             drawBoardArr[index] = i; // at the end of the loop, drawBoardArr[7] = { 0, 4, 7, 5, 2, 6, 1, 3}
-            if (drawBoard(drawBoardArr, index)) { // line 26,  if true is returned, the next line will be executed.
+            if (drawBoard(drawBoardArr, index)) { // jumps to line 70,  if true is returned, the next line will be executed.
                 continue;
             }
-            final boolean loop = givenDrawBoardArr(drawBoardArr, index + 1); // returns to line 9 but increases the index by one.
+            final boolean loop = givenDrawBoardArr(drawBoardArr, index + 1); // returns to line 45 but increments the index.
             if (loop) { // loop continues as long as the index is smaller than 8.
                 return true;
             }
@@ -61,29 +61,41 @@ public class LadylikeProgramming {
     }
 
     /**
-     *
-     * @param drawBoardArr the manipulated array that was handed overhanging by above method  in line ...
-     * @param index handed over by line ...
+     * boolean method which goes through various for loops
+     * <p>
+     * @param drawBoardArr the manipulated array that was handed overhanging by above method  in line 47.
+     * @param index handed over by line 47.
      * @return true, if the element of an array fulfills at least one condition in the for loops. else false.
      */
     public static boolean drawBoard(final int[] drawBoardArr, final int index) {
         for (int i = 0; i < index; i++) {
             if (drawBoardArr[i] == drawBoardArr[index]) {
-                return true; // returns true to the line 16
+                return true; // returns true to the line 47.
             }
         }
         for (int j = index - 1, b = drawBoardArr[index] - 1; j >= 0; j--, b--) {
             if (drawBoardArr[j] == b) {
-                return true; // returns true to the line 16
+                return true; // returns true to the line 47.
             }
         }
         for (int k = index - 1, a = drawBoardArr[index] + 1; k >= 0; k--, a++) {
             if (drawBoardArr[k] == a) {
-                return true; // returns true to the line 16
+                return true; // returns true to the line 47.
             }
         }
-        return false; // if nothing of the above is true, false will be returned to the line 16.
+        return false; // if nothing of the above is true, false will be returned to the line 47.
     }
+
+    /**
+     * This is the method that actually creates the draw board for the ladylike game.
+     * <p>
+     * It contains a nested for loop with 64 iterations.
+     * <p>
+     * The first for loop executes the second for loop AND prints a new line starting with a "|"
+     * The second for loop compares the element from the array drawBoardArr with the counting variable i.
+     * If they are the same a "d" becomes printed. Else a space.
+     * @param drawBoardArr // final manipulated array for the final method :)
+     */
     public static void drawBoard(final int[] drawBoardArr) {
         for (int i = 0; i < 8; i++) { // 64 iterations
             for (int j = 0; j < 8; j++) {
