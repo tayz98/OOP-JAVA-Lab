@@ -1,3 +1,5 @@
+package labor05;
+
 /**
  * @author SörenZacharias
  * @version 1
@@ -7,18 +9,23 @@ public class X {
   // Funktion gibt nur true oder false zurück
   public static boolean drawBoard(final int[] arrayIn, final int in) {
     for (int i = 0; i < in; i++)
-      if (arrayIn[i] == arrayIn[in])
+      if (arrayIn[i] == arrayIn[in]){
         return true;
-    for (int i = in - 1, j = arrayIn[in] - 1; i >= 0; i--, j--)
-      if (arrayIn[i] == j)
+      }
+    for (int i = in - 1, j = arrayIn[in] - 1; i >= 0; i--, j--) {
+      if (arrayIn[i] == j) {
         return true;
-    for (int i = in - 1, j = arrayIn[in] + 1; i >= 0; i--, j++)
-      if (arrayIn[i] == j)
+      }
+    }
+    for (int i = in - 1, j = arrayIn[in] + 1; i >= 0; i--, j++) {
+      if (arrayIn[i] == j) {
         return true;
+      }
+    }
     return false;
   }
 
-  // Funktion gibt nur true oder false zurück
+
   public static boolean a(final int[] arrayIn, final int in) {
     if (in == arrayIn.length) {
       drawBoard(arrayIn);
@@ -26,11 +33,13 @@ public class X {
     }
     for (int i = 0; i < arrayIn.length; i++) {
       arrayIn[in] = i;
-      if (drawBoard(arrayIn, in))
+      if (drawBoard(arrayIn, in)) {
         continue;
+      }
       final boolean C = a(arrayIn, in + 1);
-      if (C)
+      if (C) {
         return true;
+      }
     }
     return false;
   }
@@ -41,8 +50,9 @@ public class X {
    */
   public static void drawBoard(final int[] A) {
     for (int i = 0; i < A.length; i++) {
-      for (int j = 0; j < A.length; j++)
+      for (int j = 0; j < A.length; j++) {
         System.out.print("|" + ((i == A[j]) ? 'D' : ' '));
+      }
       System.out.println("|");
     }
   }
