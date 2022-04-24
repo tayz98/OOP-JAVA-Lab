@@ -17,7 +17,8 @@ public class EightQueensPuzzle {
      */
     public static void main(final String[] args) {
         /**
-         * position of queens for every row (for each row there can only be one queen) - not calculated
+         * position of queens for every row (for each row there can only be one queen) - not calculated.
+         * in this case, we will calculate the first solution for n=8 queens. Works for different n as well.
          */
         final int[] queensArr = {0, 0, 0, 0, 0, 0, 0, 0};
         calculatePosition(queensArr, 0);
@@ -79,23 +80,20 @@ public class EightQueensPuzzle {
     }
 
     /**
-     * This is the method that actually creates the board for the eight queens puzzle.
+     * This method draws the n*n chess board with the placed queens.
      * <p>
-     * It contains a nested for loop with n*n (in this case 8x8) iterations.
-     * <p>
-     * The first for loop executes the second for loop AND prints a new line starting with a "|"
-     * The second for loop compares the element from the array queensArr with the counting variable i.
-     * If they are the same, a "D" gets printed, otherwise a space.
-     * @param queensArr final manipulated array for the final method :)
+     * This method prints every row and column of the chess board on the console (with borders "|").
+     * If a queen is positioned on a certain index, the method will print a 'D'
+     * @param queensArr calculated array for the positions of the queens
      */
     public static void drawBoard(final int[] queensArr) {
         for (int i = 0; i < queensArr.length; i++) {
             for (int j = 0; j < queensArr.length; j++) {
                 System.out.print("|" + ((i == queensArr[j]) ? 'D' : ' '));
                 // checks if i is the same number as the value of the element of the array at position i. If it is, a "D" is printed, otherwise a space.
-                // also prints "|" 8 times in a row.
+                // also prints "|" n times in a row.
             }
-            System.out.println("|"); // creates the 9th "|" in each row
+            System.out.println("|"); // creates the n+1th "|" in each row
         }
     }
 }
