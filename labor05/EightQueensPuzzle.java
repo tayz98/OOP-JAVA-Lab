@@ -27,9 +27,11 @@ public class EightQueensPuzzle {
     /**
      * This method calculates the correct position for every queen in every row on the chess field.
      * <p>
-     * This method walks through all lines (by calling itself recursive) of the field and calculates the correct position for every queen in every row so that no two queens threaten each other.
+     * This method walks through all lines (by calling itself recursive) of the field and calculates
+     * the correct position for every queen in every row so that no two queens threaten each other.
      * It calculates the "correct" path through the field until it reaches the end (length of the array).
-     * If the method doesn't find a solution for the next row, it takes a step back and increases the position of the row before.
+     * If the method doesn't find a solution for the next row, it takes a step back and
+     * increases the position of the row before.
      * @param queensArr the recent array with the positions of the queens
      * @param row the recent row that we are calculating the position for
      * @return true if the end has reached, otherwise it returns false
